@@ -3,7 +3,19 @@ package main
 import (
 	"strconv"
 	"strings"
+	"unicode"
 )
+
+// manual capitalize function using standard library
+
+func capitalize(s string) string {
+	if len(s) == 0 {
+		return " "
+	}
+	runes := []rune(s)
+	runes[0] = unicode.ToUpper(runes[0])
+	return string(runes)
+}
 
 func applyUpper(input string) string {
 	words := strings.Fields(input)
@@ -79,7 +91,7 @@ func applyUpper(input string) string {
 		case "cap":
 			if len(result) > 0 {
 				preWord := len(result) - 1
-				result[preWord] = strings.ToTitle(result[preWord])
+				result[preWord] = capitalize(result[preWord])
 			}
 
 		default:
