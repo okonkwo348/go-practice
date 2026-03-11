@@ -41,8 +41,6 @@ func applyUpper(input string) string {
 				result[preStr] = strconv.FormatInt(hexStr, 10)
 				// (hex) is deleted
 
-			} else {
-				result = append(result, word)
 			}
 		}
 
@@ -62,11 +60,11 @@ func applyUpper(input string) string {
 				// convert of binary to string
 				result[preStr] = strconv.FormatInt(hexStr, 10)
 
-			} else {
-				result = append(result, word)
 			}
 		}
 
+		//  SIMPLE TAGS (up), (low), (cap)
+		// We use a switch because we are checking for EXACT matches here.
 		switch word {
 
 		// Modification into Uppercase
@@ -95,68 +93,43 @@ func applyUpper(input string) string {
 			}
 
 		default:
-			// It's a normal word, just add it to the pile
+			// ONLY append if it's NOT a tag
 			result = append(result, word)
 
 		}
 
-		// solving for (up,2)
-		if i+1 < len(words) && strings.HasPrefix(word, "(up,") {
-			peel := strings.TrimSuffix(words[i+1], ")")
-			n, err := strconv.Atoi(peel)
+		// SENSOR: COMPLEX TAGS (up, n), (low, n), (cap, n)
+		if i+1 < len(words) && (strings.HasPrefix(word, "(up,") || strings.HasPrefix(word, "(low,") || strings.HasPrefix(word, "(cap,")) {
+
+			// THE EXTRACTION: "2)" -> "2"
+			numberStr := strings.TrimSuffix(words[i+1], ")")
+			n, err := strconv.Atoi(numberStr)
+
 			if err == nil {
+				// THE SAFETY GUARD: Don't look back further than we have words
+
 				if n > len(result) {
 					n = len(result)
 				}
+
+				// THE REVERSE LOOP: Count back 'n' times
 				for j := 1; j <= n; j++ {
 					targetIndex := len(result) - j
-					result[targetIndex] = strings.ToUpper(result[targetIndex])
-				}
-				i++
-				continue
-			}
-		} else {
-			result = append(result, word)
-		}
 
-		// conversion of (low, 2)
-		if i+1 < len(words) && strings.HasPrefix(word, "(low,") {
-			conv := strings.TrimSuffix(words[i+1], ")")
-			n, err := strconv.Atoi(conv)
-			if err == nil {
-				if n > len(result) {
-					n = len(result)
+					// Determine WHICH transformation to apply
+					if strings.HasPrefix(word, "(up,") {
+						result[targetIndex] = strings.ToUpper(result[targetIndex])
+					} else if strings.HasPrefix(word, "(low,") {
+						result[targetIndex] = strings.ToLower(result[targetIndex])
+					} else if strings.HasPrefix(word, "(cap,") {
+						result[targetIndex] = capitalize(result[targetIndex])
+					}
 				}
-				for j := 1; j <= n; j++ {
-					targetIndex := len(result) - j
-					result[targetIndex] = strings.ToLower(result[targetIndex])
-				}
-				i++
-				continue
+				i++      // Skip the number word
+				continue // Skip appending
 			}
-		} else {
-			result = append(result, word)
 		}
-
-		// conversion to (cap, 2)
-		if i+1 < len(words) && strings.HasPrefix(word, "(cap,") {
-			con := strings.TrimSuffix(words[i+1], ")")
-			n, err := strconv.Atoi(con)
-			if err == nil {
-				if n > len(result) {
-					n = len(result)
-				}
-				for j := 1; j <= n; j++ {
-					tarIndex := len(result) - j
-					result[tarIndex] = capitalize(result[tarIndex])
-				}
-				i++
-				continue
-			}
-		} else {
-			result = append(result, word)
-		}
-
+		result = append(result, word)
 	}
 	return strings.Join(result, " ")
 
