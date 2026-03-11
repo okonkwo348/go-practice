@@ -99,6 +99,65 @@ func applyUpper(input string) string {
 			result = append(result, word)
 
 		}
+
+		// solving for (up,2)
+		if i+1 < len(words) && strings.HasPrefix(word, "(up,") {
+			peel := strings.TrimSuffix(words[i+1], ")")
+			n, err := strconv.Atoi(peel)
+			if err == nil {
+				if n > len(result) {
+					n = len(result)
+				}
+				for j := 1; j <= n; j++ {
+					targetIndex := len(result) - j
+					result[targetIndex] = strings.ToUpper(result[targetIndex])
+				}
+				i++
+				continue
+			}
+		} else {
+			result = append(result, word)
+		}
+
+		// conversion of (low, 2)
+		if i+1 < len(words) && strings.HasPrefix(word, "(low,") {
+			conv := strings.TrimSuffix(words[i+1], ")")
+			n, err := strconv.Atoi(conv)
+			if err == nil {
+				if n > len(result) {
+					n = len(result)
+				}
+				for j := 1; j <= n; j++ {
+					targetIndex := len(result) - j
+					result[targetIndex] = strings.ToLower(result[targetIndex])
+				}
+				i++
+				continue
+			}
+		} else {
+			result = append(result, word)
+		}
+
+		// conversion to (cap, 2)
+		if i+1 < len(words) && strings.HasPrefix(word, "(cap,") {
+			con := strings.TrimSuffix(words[i+1], ")")
+			n, err := strconv.Atoi(con)
+			if err == nil {
+				if n > len(result) {
+					n = len(result)
+				}
+				for j := 1; j <= n; j++ {
+					tarIndex := len(result) - j
+					result[tarIndex] = capitalize(result[tarIndex])
+				}
+				i++
+				continue
+			}
+		} else {
+			result = append(result, word)
+		}
+
 	}
 	return strings.Join(result, " ")
+
 }
