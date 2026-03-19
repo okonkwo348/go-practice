@@ -1,0 +1,4 @@
+it was THE (low, 1) best of times , it was the worst of times (up) , IT WAS THE (low, 3) age of wisdom , 
+it was the age of foolishness (cap, 6) , it was the epoch of belief , it was the epoch of incredulity , 
+it was the season of Light , it was the season of darkness , it was the spring of hope , IT WAS THE 
+(low, 3) winter of despair . 1E (hex) files and 10 (bin) bytes . ' awesome ' !
