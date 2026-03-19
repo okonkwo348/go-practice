@@ -16,7 +16,7 @@ func main() {
 	//
 
 	sampleFile := os.Args[1]
-	resultFile := os.Args[2] // Save this for later
+	resultFile := os.Args[2]
 
 	//Read the entire file content into a a byte slice
 	content, err := os.ReadFile(sampleFile)

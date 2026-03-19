@@ -25,7 +25,7 @@ func handleBin(s string) string {
 	return strconv.FormatInt(val, 10)
 }
 
-// Title case
+// Function that convert a word to Title case
 func capitalize(a string) string {
 	s := strings.ToLower(a)
 	if len(s) == 0 {
@@ -36,6 +36,7 @@ func capitalize(a string) string {
 	return string(runes)
 }
 
+// function to handle Punctuation
 func FixPunctuation(text string) string {
 	reBefore := regexp.MustCompile(`\s+([,.;:?!])`)
 	text = reBefore.ReplaceAllString(text, "$1")
@@ -46,6 +47,7 @@ func FixPunctuation(text string) string {
 	return strings.TrimSpace(text)
 }
 
+// function to handle Quotation in an article
 func FixQuotes(text string) string {
 	reOpen := regexp.MustCompile(`'\s+([a-zA-Z0-9])`)
 	text = reOpen.ReplaceAllString(text, "'$1")
@@ -57,6 +59,7 @@ func FixQuotes(text string) string {
 
 }
 
+// Function to handle Vowels in an article
 func FixArticles(s []string) string {
 	// s := strings.Fields(a)
 	for i := 0; i < len(s); i++ {
@@ -66,14 +69,23 @@ func FixArticles(s []string) string {
 
 		// 2. We only care if the current word is "a" or "an"
 		if word == "an" || word == "a" {
-			next := strings.ToLower(s[i+1])
+			next := s[i+1]
 
 			// Check if the NEXT word starts with a vowel or 'h'
 			// We use nextWord[0] to look at the first character
-			if strings.ContainsAny(string(next[0]), "aeiouh") {
-				s[i] = "An"
+			if strings.ContainsAny(string(next[0]), "aeiouhAEIOUH") {
+				if s[i] == "An" || s[i] == "A" {
+					s[i] = "An"
+				} else {
+					s[i] = "an"
+				}
+
 			} else {
-				s[i] = "A"
+				if s[i] == "a" || s[i] == "an" {
+					s[i] = "a"
+				} else {
+					s[i] = "A"
+				}
 			}
 		}
 	}
