@@ -49,11 +49,9 @@ func FixPunctuation(text string) string {
 
 // function to handle Quotation in an article
 func FixQuotes(text string) string {
-	reOpen := regexp.MustCompile(`'\s+([a-zA-Z0-9])`)
-	text = reOpen.ReplaceAllString(text, "'$1")
 
-	reClose := regexp.MustCompile(`([a-zA-Z0-9])\s+'`)
-	text = reClose.ReplaceAllString(text, "$1'")
+	singleQuote := regexp.MustCompile(`'\s+([^']*?)\s+'`)
+	text = singleQuote.ReplaceAllString(text, "'$1'")
 
 	return strings.TrimSpace(text)
 
