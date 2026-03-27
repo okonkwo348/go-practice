@@ -39,6 +39,12 @@ func decBin(s int64) string {
 }
 
 func main() {
+	fmt.Println("WELCOME CONVERSION CALCULATOE")
+	fmt.Println()
+	fmt.Println("U")
+	fmt.Println("Hex -> Dec do : convert 1E hex")
+	fmt.Println("Bin -> Dec do : convert 10 bin")
+	fmt.Println("Dec -> Hex or Bin do : convert 1E dec")
 start:
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -49,8 +55,8 @@ start:
 	line := scanner.Text()
 	part := strings.Fields(line)
 
-	if len(part) != 3 {
-		fmt.Println("")
+	if len(part) != 3 && part[0] != "quit" && part[0] != "HELP" && part[0] != "help" {
+		fmt.Println("error: requires three arguments, please type [HELP] for clarity")
 		goto start
 	}
 
@@ -60,6 +66,8 @@ start:
 
 	if part[0] == "HELP" || part[0] == "help" {
 		fmt.Println("Hex -> Dec do : convert 1E hex")
+		fmt.Println("Bin -> Dec do : convert 10 bin")
+		fmt.Println("Dec -> Hex or Bin do : convert 1E dec")
 		fmt.Println()
 		goto start
 	}
@@ -68,12 +76,20 @@ start:
 		switch part[2] {
 		case "bin":
 			fmt.Println(bin(part[1]))
+			fmt.Println()
+			goto start
 		case "hex":
 			fmt.Println(hex(part[1]))
+			fmt.Println()
+			goto start
 		case "dex":
 			fmt.Println(part[1])
+			fmt.Println()
+			goto start
 		default:
 			fmt.Println("out the given functions")
+			fmt.Println()
+			goto start
 		}
 	}
 }
