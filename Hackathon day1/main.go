@@ -102,10 +102,10 @@ start:
 	}
 
 	if part[0] == "HELP" || part[0] == "help" {
-		fmt.Println("To add type: <sum> <num1> <num2>")
-		fmt.Println("To substrate type: <sub> <num1> <num2>")
-		fmt.Println("To mulply type: <mul> <num1> <num2>")
-		fmt.Println("To divide type: <div> <num1> <num2>")
+		fmt.Println("To ADD do: <sum> <num1> <num2>   e.g add 3 4")
+		fmt.Println("To SUBSTRATE do: <sub> <num1> <num2>  e.g sub 53 79")
+		fmt.Println("To MULTIPLY do: <mul> <num1> <num2>    e.g mul 34 334")
+		fmt.Println("To DIVIDE do: <div> <num1> <num2>   e.g div 333 455")
 		fmt.Println()
 		goto start
 	}
