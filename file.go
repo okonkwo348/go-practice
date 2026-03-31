@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"os"
+)
+
 // creating a file using os.Create
 
 // func main() {
@@ -93,3 +98,26 @@ package main
 
 // 	fmt.Fprintf(file, "Name: %s\nAge: %d\nCourse: %s\nGrade: %d", Name, Age, Course, Grade)
 // }
+
+// Method 4: OpenFile  with O_CREATE and O_WRONLY
+func main() {
+	// overwrites existing content
+	// file, err := os.OpenFile("student.txt", os.O_CREATE|os.O_WRONLY, 0644)
+
+	// adds to existing content
+	file, err := os.OpenFile("student.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		fmt.Println("error: ", err)
+		return
+	}
+
+	defer file.Close()
+
+	file.WriteString("Name: Okonkwo\n")
+	file.WriteString("NameLast: EMMa\n")
+	file.WriteString("Age: 34\n")
+	file.WriteString("Course: python\n")
+
+	fmt.Println("File written successful")
+
+}
