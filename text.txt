@@ -1,2 +1,4 @@
-Name: Okonkwo Emma
-age: 23
+Name: okonkwo
+Age: 34
+Course: python
+Grade: 89

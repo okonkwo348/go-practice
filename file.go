@@ -1,10 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
-
 // creating a file using os.Create
 
 // func main() {
@@ -51,18 +46,50 @@ import (
 // 	fmt.Printf("%v file created sucessfully", file.Name())
 // }
 
-func main() {
-	file, err := os.Create("text.txt")
-	if err != nil {
-		fmt.Println("error: ", err)
-		return
-	}
+//Method 2: Fprintf()
+// func main() {
+// 	file, err := os.Create("text.txt")
+// 	if err != nil {
+// 		fmt.Println("error: ", err)
+// 		return
+// 	}
 
-	defer file.Close()
+// 	defer file.Close()
 
-	name := "Okonkwo Emma"
-	age := 23
+// 	name := "Okonkwo Emma"
+// 	age := 23
 
-	fmt.Fprintf(file, "Name: %s\n", name)
-	fmt.Fprintf(file, "age: %v\n", age)
-}
+// 	fmt.Fprintf(file, "Name: %s\nage: %v\n", name, age)
+// 	// fmt.Fprintf(file, "age: %v\n", age)
+// }
+
+// Method 3: os.WriteFile
+// func main() {
+// 	content := "Name: Okonkwo\nAge: 23"
+// 	err := os.WriteFile("hello.txt", []byte(content), 0644)
+// 	if err != nil {
+// 		fmt.Println("error: ", err)
+// 		return
+// 	}
+// 	// close file is handled automatically
+
+// 	fmt.Println("File written successfully")
+
+// }
+
+// Exercise
+// func main() {
+// 	file, err := os.Create("text.txt")
+// 	if err != nil {
+// 		fmt.Println("error: ", err)
+// 		return
+// 	}
+// 	defer file.Close()
+
+// 	Name := "okonkwo"
+// 	Age := 34
+// 	Course := "python"
+// 	Grade := 89
+
+// 	fmt.Fprintf(file, "Name: %s\nAge: %d\nCourse: %s\nGrade: %d", Name, Age, Course, Grade)
+// }
