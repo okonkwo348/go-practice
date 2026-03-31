@@ -36,17 +36,33 @@ import (
 // Writing files
 
 // 1. method One: file.WriteString()
+// func main() {
+// 	file, err := os.Create("hell.txt")
+// 	if err != nil {
+// 		fmt.Println("error:", err)
+// 		return
+// 	}
+
+// 	defer file.Close()
+
+// 	file.WriteString("Name: Okonkwo Emmanuel\n")
+// 	file.WriteString("Age: 23")
+
+// 	fmt.Printf("%v file created sucessfully", file.Name())
+// }
+
 func main() {
-	file, err := os.Create("hell.txt")
+	file, err := os.Create("text.txt")
 	if err != nil {
-		fmt.Println("error:", err)
+		fmt.Println("error: ", err)
 		return
 	}
 
 	defer file.Close()
 
-	file.WriteString("Name: Okonkwo Emmanuel\n")
-	file.WriteString("Age: 23")
+	name := "Okonkwo Emma"
+	age := 23
 
-	fmt.Printf("%v file created sucessfully", file.Name())
+	fmt.Fprintf(file, "Name: %s\n", name)
+	fmt.Fprintf(file, "age: %v\n", age)
 }
