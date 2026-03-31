@@ -3,7 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
+	"strings"
 )
 
 // creating a file using os.Create
@@ -133,6 +135,24 @@ import (
 
 // os.Open + bufio.Scanner
 // read the file line by line - better for large files
+// func main() {
+// 	file, err := os.Open(("student.txt"))
+// 	if err != err {
+// 		fmt.Println("error: ", err)
+// 		return
+// 	}
+
+// 	defer file.Close()
+
+// 	scanner := bufio.NewScanner(file)
+
+// 	for scanner.Scan() {
+// 		fmt.Println(scanner.Text())
+// 	}
+// }
+
+//Method 2: os.Open + bufio.NewReader
+
 func main() {
 	file, err := os.Open(("student.txt"))
 	if err != err {
@@ -142,9 +162,18 @@ func main() {
 
 	defer file.Close()
 
-	scanner := bufio.NewScanner(file)
+	reader := bufio.NewReader(file)
 
-	for scanner.Scan() {
-		fmt.Println(scanner.Text())
+	for {
+		line, err := reader.ReadString(':')
+		line = strings.TrimSpace(line)
+
+		if line != "" {
+			fmt.Println(line)
+		}
+
+		if err == io.EOF { // EOF means End Of File — no more lines
+			break
+		}
 	}
 }
