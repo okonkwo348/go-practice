@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 )
@@ -100,24 +101,50 @@ import (
 // }
 
 // Method 4: OpenFile  with O_CREATE and O_WRONLY
-func main() {
-	// overwrites existing content
-	// file, err := os.OpenFile("student.txt", os.O_CREATE|os.O_WRONLY, 0644)
+// func main() {
+// 	// overwrites existing content
+// 	file, err := os.OpenFile("student.txt", os.O_WRONLY, 0644)
 
-	// adds to existing content
-	file, err := os.OpenFile("student.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
-	if err != nil {
+// 	// adds to existing content
+// 	// file, err := os.OpenFile("student.txt", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+// 	if err != nil {
+// 		fmt.Println("error: ", err)
+// 		return
+// 	}
+
+// 	defer file.Close()
+
+// 	file.WriteString("Hi")
+
+// 	fmt.Println("File written successful")
+
+// }
+
+// READING A FILE
+// Method 1: os.ReadFile()
+// func main() {
+// 	content, err := os.ReadFile("student.txt")
+// 	if err != nil {
+// 		fmt.Println("Error:", err)
+// 		return
+// 	}
+// 	fmt.Println(content)
+// }
+
+// os.Open + bufio.Scanner
+// read the file line by line - better for large files
+func main() {
+	file, err := os.Open(("student.txt"))
+	if err != err {
 		fmt.Println("error: ", err)
 		return
 	}
 
 	defer file.Close()
 
-	file.WriteString("Name: Okonkwo\n")
-	file.WriteString("NameLast: EMMa\n")
-	file.WriteString("Age: 34\n")
-	file.WriteString("Course: python\n")
+	scanner := bufio.NewScanner(file)
 
-	fmt.Println("File written successful")
-
+	for scanner.Scan() {
+		fmt.Println(scanner.Text())
+	}
 }
