@@ -1,4 +1,0 @@
-Name: okonkwo
-Age: 34
-Course: python
-Grade: 89
