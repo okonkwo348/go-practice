@@ -52,38 +52,38 @@ import (
 
 // }
 
-type Student struct {
-	Name    string
-	Subject string
-	Score   float64
-}
+// type Student struct {
+// 	Name    string
+// 	Subject string
+// 	Score   float64
+// }
 
-func (s *Student) updateScore(newScore float64) error {
-	if newScore < 0 || newScore > 100 {
-		return errors.New("score must be between 0 and 100")
-	}
-	s.Score = newScore
-	return nil
-}
+// func (s *Student) updateScore(newScore float64) error {
+// 	if newScore < 0 || newScore > 100 {
+// 		return errors.New("score must be between 0 and 100")
+// 	}
+// 	s.Score = newScore
+// 	return nil
+// }
 
-func (s Student) getGrade() string {
-	if s.Score >= 90 {
-		return "A"
-	}
+// func (s Student) getGrade() string {
+// 	if s.Score >= 90 {
+// 		return "A"
+// 	}
 
-	if s.Score >= 80 {
-		return "B"
-	}
+// 	if s.Score >= 80 {
+// 		return "B"
+// 	}
 
-	if s.Score >= 70 {
-		return "C"
-	}
+// 	if s.Score >= 70 {
+// 		return "C"
+// 	}
 
-	if s.Score >= 50 {
-		return "D"
-	}
-	return "F"
-}
+// 	if s.Score >= 50 {
+// 		return "D"
+// 	}
+// 	return "F"
+// }
 
 // func main() {
 // 	student1 := Student{"peter", "maths", 50.3}
