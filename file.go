@@ -228,38 +228,86 @@ import (
 
 //Checking if a File Exist
 
+// func fileExists(filename string) bool {
+// 	_, err := os.Stat(filename)
+// 	if err != nil {
+// 		return false
+// 	}
+// 	return true
+// }
+
+// func checkFile(filename string) {
+// 	if fileExists(filename) {
+// 		fmt.Printf("%s exists!\n", filename)
+// 		file, err := os.ReadFile(filename)
+// 		if err != nil {
+// 			fmt.Println("Error: ", err)
+// 			return
+// 		}
+// 		fmt.Println(string(file))
+
+// 	} else {
+// 		fmt.Printf("%s not found — creating it\n", filename)
+// 		content, err := os.Create(filename)
+// 		if err != nil {
+// 			fmt.Println("Error :", err)
+// 			return
+// 		}
+// 		defer content.Close()
+// 		content.WriteString("New file created!\n")
+// 	}
+// }
+
+// func main() {
+// 	checkFile("diary.txt")
+// 	checkFile("now.txt")
+
+// }
+
+//Exercise
+
 func fileExists(filename string) bool {
 	_, err := os.Stat(filename)
 	if err != nil {
+		fmt.Println("Error: ", err)
 		return false
 	}
 	return true
 }
-
-func checkFile(filename string) {
+func createRecord(filename string, name string, course string) {
 	if fileExists(filename) {
-		fmt.Printf("%s exists!\n", filename)
-		file, err := os.ReadFile(filename)
+		fmt.Println("Record already exists!")
+		return
+	} else {
+		file, err := os.Create(filename)
 		if err != nil {
 			fmt.Println("Error: ", err)
 			return
 		}
-		fmt.Println(string(file))
+		defer file.Close()
 
-	} else {
-		fmt.Printf("%s not found — creating it\n", filename)
-		content, err := os.Create(filename)
-		if err != nil {
-			fmt.Println("Error :", err)
-			return
-		}
-		defer content.Close()
-		content.WriteString("New file created!\n")
+		file.WriteString("=== Student Record ===")
+		file.WriteString("Name: " + name)
+		file.WriteString("Course: " + course)
+
+		fmt.Printf("Record created for %s!", name)
+
 	}
 }
 
-func main() {
-	checkFile("diary.txt")
-	checkFile("now.txt")
+func addScore(filename string, subject string, score float64) {
+	if !fileExists(filename) {
+		fmt.Println("Record not found!")
+		return
+	} else {
+		file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+		if err != nil {
+			fmt.Println("Error: ", err)
+			return
+		}
+		defer file.Close()
 
+		fmt.Fprintf("%s: %d", subject, score)
+
+	}
 }
