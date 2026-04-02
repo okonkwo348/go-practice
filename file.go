@@ -3,9 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"os"
-	"strings"
 )
 
 // creating a file using os.Create
@@ -153,27 +151,78 @@ import (
 
 //Method 2: os.Open + bufio.NewReader
 
-func main() {
-	file, err := os.Open(("student.txt"))
-	if err != err {
+// func main() {
+// 	file, err := os.Open(("student.txt"))
+// 	if err != err {
+// 		fmt.Println("error: ", err)
+// 		return
+// 	}
+
+// 	defer file.Close()
+
+// 	reader := bufio.NewReader(file)
+
+// 	for {
+// 		line, err := reader.ReadString(':')
+// 		line = strings.TrimSpace(line)
+
+// 		if line != "" {
+// 			fmt.Println(line)
+// 		}
+
+// 		if err == io.EOF { // EOF means End Of File — no more lines
+// 			break
+// 		}
+// 	}
+// }
+
+func createDiary(filename string) {
+	file, err := os.Create(filename)
+	if err != nil {
 		fmt.Println("error: ", err)
 		return
 	}
+	file.WriteString("=== My Diary ===\n")
+	fmt.Println("Diary created!")
+}
 
+func addEntry(filename string, entry string) {
+	file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+	if err != nil {
+		fmt.Println("error: ", err)
+		return
+	}
 	defer file.Close()
 
-	reader := bufio.NewReader(file)
+	file.WriteString(entry + "\n")
 
-	for {
-		line, err := reader.ReadString(':')
-		line = strings.TrimSpace(line)
+	fmt.Printf("%s added to diary!\n", entry)
+}
 
-		if line != "" {
-			fmt.Println(line)
-		}
-
-		if err == io.EOF { // EOF means End Of File — no more lines
-			break
-		}
+func readDiary(filename string) {
+	file, err := os.Open(filename)
+	if err != nil {
+		fmt.Println("error: ", err)
+		return
 	}
+	defer file.Close()
+	fmt.Println()
+
+	scanner := bufio.NewScanner(file)
+
+	newLine := 1
+	for scanner.Scan() {
+		fmt.Printf("Line %d: %s\n", newLine, scanner.Text())
+		newLine++
+	}
+
+	fmt.Println("=== End of Diary ===")
+}
+
+func main() {
+	createDiary("diary.txt")
+	addEntry("diary.txt", "Today I started learning Go! added to diary!")
+	addEntry("diary.txt", "I learned file handling today! added to diary!")
+	addEntry("diary.txt", "Go is becoming my favorite language! added to diary!")
+	readDiary("diary.txt")
 }

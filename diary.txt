@@ -1,0 +1,4 @@
+=== My Diary ===
+Today I started learning Go! added to diary!
+I learned file handling today! added to diary!
+Go is becoming my favorite language! added to diary!
