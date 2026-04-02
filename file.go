@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 )
@@ -176,53 +175,91 @@ import (
 // 	}
 // }
 
-func createDiary(filename string) {
-	file, err := os.Create(filename)
+// func createDiary(filename string) {
+// 	file, err := os.Create(filename)
+// 	if err != nil {
+// 		fmt.Println("error: ", err)
+// 		return
+// 	}
+// 	file.WriteString("=== My Diary ===\n")
+// 	fmt.Println("Diary created!")
+// }
+
+// func addEntry(filename string, entry string) {
+// 	file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+// 	if err != nil {
+// 		fmt.Println("error: ", err)
+// 		return
+// 	}
+// 	defer file.Close()
+
+// 	file.WriteString(entry + "\n")
+
+// 	fmt.Printf("%s added to diary!\n", entry)
+// }
+
+// func readDiary(filename string) {
+// 	file, err := os.Open(filename)
+// 	if err != nil {
+// 		fmt.Println("error: ", err)
+// 		return
+// 	}
+// 	defer file.Close()
+// 	fmt.Println()
+
+// 	scanner := bufio.NewScanner(file)
+
+// 	newLine := 1
+// 	for scanner.Scan() {
+// 		fmt.Printf("Line %d: %s\n", newLine, scanner.Text())
+// 		newLine++
+// 	}
+
+// 	fmt.Println("=== End of Diary ===")
+// }
+
+// func main() {
+// 	createDiary("diary.txt")
+// 	addEntry("diary.txt", "Today I started learning Go! added to diary!")
+// 	addEntry("diary.txt", "I learned file handling today! added to diary!")
+// 	addEntry("diary.txt", "Go is becoming my favorite language! added to diary!")
+// 	readDiary("diary.txt")
+// }
+
+//Checking if a File Exist
+
+func fileExists(filename string) bool {
+	_, err := os.Stat(filename)
 	if err != nil {
-		fmt.Println("error: ", err)
-		return
+		return false
 	}
-	file.WriteString("=== My Diary ===\n")
-	fmt.Println("Diary created!")
+	return true
 }
 
-func addEntry(filename string, entry string) {
-	file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
-	if err != nil {
-		fmt.Println("error: ", err)
-		return
+func checkFile(filename string) {
+	if fileExists(filename) {
+		fmt.Printf("%s exists!\n", filename)
+		file, err := os.ReadFile(filename)
+		if err != nil {
+			fmt.Println("Error: ", err)
+			return
+		}
+		fmt.Println(string(file))
+
+	} else {
+		fmt.Printf("%s not found — creating it\n", filename)
+		content, err := os.Create(filename)
+		if err != nil {
+			fmt.Println("Error :", err)
+			return
+		}
+		defer content.Close()
+		content.WriteString("New file created!\n")
 	}
-	defer file.Close()
-
-	file.WriteString(entry + "\n")
-
-	fmt.Printf("%s added to diary!\n", entry)
-}
-
-func readDiary(filename string) {
-	file, err := os.Open(filename)
-	if err != nil {
-		fmt.Println("error: ", err)
-		return
-	}
-	defer file.Close()
-	fmt.Println()
-
-	scanner := bufio.NewScanner(file)
-
-	newLine := 1
-	for scanner.Scan() {
-		fmt.Printf("Line %d: %s\n", newLine, scanner.Text())
-		newLine++
-	}
-
-	fmt.Println("=== End of Diary ===")
 }
 
 func main() {
-	createDiary("diary.txt")
-	addEntry("diary.txt", "Today I started learning Go! added to diary!")
-	addEntry("diary.txt", "I learned file handling today! added to diary!")
-	addEntry("diary.txt", "Go is becoming my favorite language! added to diary!")
-	readDiary("diary.txt")
+	checkFile("diary.txt")
+	checkFile("now.txt")
+
 }
