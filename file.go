@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 )
@@ -269,7 +270,6 @@ import (
 func fileExists(filename string) bool {
 	_, err := os.Stat(filename)
 	if err != nil {
-		fmt.Println("Error: ", err)
 		return false
 	}
 	return true
@@ -286,9 +286,9 @@ func createRecord(filename string, name string, course string) {
 		}
 		defer file.Close()
 
-		file.WriteString("=== Student Record ===")
-		file.WriteString("Name: " + name)
-		file.WriteString("Course: " + course)
+		file.WriteString("=== Student Record ===\n")
+		file.WriteString("Name: " + name + "\n")
+		file.WriteString("Course: " + course + "\n")
 
 		fmt.Printf("Record created for %s!", name)
 
@@ -296,10 +296,7 @@ func createRecord(filename string, name string, course string) {
 }
 
 func addScore(filename string, subject string, score float64) {
-	if !fileExists(filename) {
-		fmt.Println("Record not found!")
-		return
-	} else {
+	if fileExists(filename) {
 		file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
 		if err != nil {
 			fmt.Println("Error: ", err)
@@ -307,7 +304,42 @@ func addScore(filename string, subject string, score float64) {
 		}
 		defer file.Close()
 
-		fmt.Fprintf("%s: %d", subject, score)
-
+		fmt.Fprintf(file, "%s: %.2f\n", subject, score)
+		fmt.Printf("%s score added!\n", subject)
+	} else {
+		fmt.Println("Record not found!")
+		return
 	}
+}
+
+func viewRecord(filename string) {
+	if fileExists(filename) {
+		file, err := os.Open(filename)
+		if err != nil {
+			fmt.Println("error: ", err)
+			return
+		}
+		defer file.Close()
+
+		scanner := bufio.NewScanner(file)
+
+		newLine := 1
+		for scanner.Scan() {
+			fmt.Printf("Line %d: %s\n", newLine, scanner.Text())
+			newLine++
+		}
+		fmt.Println("=== End of Record ===")
+	} else {
+		fmt.Println("Record not found!")
+		return
+	}
+}
+
+func main() {
+	createRecord("student.txt", "Okonkwo", "Physics")
+	createRecord("student.txt", "Okonkwo", "Physics")
+	addScore("student.txt", "maths", 50)
+	addScore("student.txt", "english", 90)
+	addScore("student.txt", "science", 30)
+	viewRecord("student.txt")
 }

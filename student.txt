@@ -1,9 +1,9 @@
-Hillo World!!!:
-Age:
-Course:
+=== Student Record ===
 Name: Okonkwo
-NameLast: EMMa
-Age: 898
-Course: python
-: 90
-Course: C3
+Course: Physics
+maths: 50.00
+english: 90.00
+science: 30.00
+maths: 50.00
+english: 90.00
+science: 30.00
