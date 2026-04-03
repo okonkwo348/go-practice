@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 )
@@ -267,79 +266,110 @@ import (
 
 //Exercise
 
-func fileExists(filename string) bool {
+// func fileExists(filename string) bool {
+// 	_, err := os.Stat(filename)
+// 	if err != nil {
+// 		return false
+// 	}
+// 	return true
+// }
+// func createRecord(filename string, name string, course string) {
+// 	if fileExists(filename) {
+// 		fmt.Println("Record already exists!")
+// 		return
+// 	} else {
+// 		file, err := os.Create(filename)
+// 		if err != nil {
+// 			fmt.Println("Error: ", err)
+// 			return
+// 		}
+// 		defer file.Close()
+
+// 		file.WriteString("=== Student Record ===\n")
+// 		file.WriteString("Name: " + name + "\n")
+// 		file.WriteString("Course: " + course + "\n")
+
+// 		fmt.Printf("Record created for %s!", name)
+
+// 	}
+// }
+
+// func addScore(filename string, subject string, score float64) {
+// 	if fileExists(filename) {
+// 		file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
+// 		if err != nil {
+// 			fmt.Println("Error: ", err)
+// 			return
+// 		}
+// 		defer file.Close()
+
+// 		fmt.Fprintf(file, "%s: %.2f\n", subject, score)
+// 		fmt.Printf("%s score added!\n", subject)
+// 	} else {
+// 		fmt.Println("Record not found!")
+// 		return
+// 	}
+// }
+
+// func viewRecord(filename string) {
+// 	if fileExists(filename) {
+// 		file, err := os.Open(filename)
+// 		if err != nil {
+// 			fmt.Println("error: ", err)
+// 			return
+// 		}
+// 		defer file.Close()
+
+// 		scanner := bufio.NewScanner(file)
+
+// 		newLine := 1
+// 		for scanner.Scan() {
+// 			fmt.Printf("Line %d: %s\n", newLine, scanner.Text())
+// 			newLine++
+// 		}
+// 		fmt.Println("=== End of Record ===")
+// 	} else {
+// 		fmt.Println("Record not found!")
+// 		return
+// 	}
+// }
+
+// func main() {
+// 	createRecord("student.txt", "Okonkwo", "Physics")
+// 	createRecord("student.txt", "Okonkwo", "Physics")
+// 	addScore("student.txt", "maths", 50)
+// 	addScore("student.txt", "english", 90)
+// 	addScore("student.txt", "science", 30)
+// 	viewRecord("student.txt")
+// }
+
+//Deleting FILE
+
+// func main() {
+// 	err := os.Remove("hell.txt")
+// 	if err != nil {
+// 		fmt.Println("Error:", err)
+// 		return
+// 	}
+// 	fmt.Println("File deleted successfully")
+// }
+
+// Always check if the file exists beforrrre deleting:
+func deleteFile(filename string) {
 	_, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		fmt.Printf("%s nnnnot found - nothing to delete\n", filename)
+		return
+	}
+	err = os.Remove(filename)
 	if err != nil {
-		return false
-	}
-	return true
-}
-func createRecord(filename string, name string, course string) {
-	if fileExists(filename) {
-		fmt.Println("Record already exists!")
-		return
-	} else {
-		file, err := os.Create(filename)
-		if err != nil {
-			fmt.Println("Error: ", err)
-			return
-		}
-		defer file.Close()
-
-		file.WriteString("=== Student Record ===\n")
-		file.WriteString("Name: " + name + "\n")
-		file.WriteString("Course: " + course + "\n")
-
-		fmt.Printf("Record created for %s!", name)
-
-	}
-}
-
-func addScore(filename string, subject string, score float64) {
-	if fileExists(filename) {
-		file, err := os.OpenFile(filename, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0644)
-		if err != nil {
-			fmt.Println("Error: ", err)
-			return
-		}
-		defer file.Close()
-
-		fmt.Fprintf(file, "%s: %.2f\n", subject, score)
-		fmt.Printf("%s score added!\n", subject)
-	} else {
-		fmt.Println("Record not found!")
+		fmt.Println("Error deleting file:", err)
 		return
 	}
-}
-
-func viewRecord(filename string) {
-	if fileExists(filename) {
-		file, err := os.Open(filename)
-		if err != nil {
-			fmt.Println("error: ", err)
-			return
-		}
-		defer file.Close()
-
-		scanner := bufio.NewScanner(file)
-
-		newLine := 1
-		for scanner.Scan() {
-			fmt.Printf("Line %d: %s\n", newLine, scanner.Text())
-			newLine++
-		}
-		fmt.Println("=== End of Record ===")
-	} else {
-		fmt.Println("Record not found!")
-		return
-	}
+	fmt.Printf("%s deleted sucessfully!\n", filename)
 }
 
 func main() {
-	createRecord("student.txt", "Okonkwo", "Physics")
-	createRecord("student.txt", "Okonkwo", "Physics")
-	addScore("student.txt", "maths", 50)
-	addScore("student.txt", "english", 90)
-	addScore("student.txt", "science", 30)
-	viewRecord("student.txt")
+	deleteFile("hello.txt")
+	deleteFile("hell.txt")
 }

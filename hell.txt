@@ -1,7 +1,0 @@
-Name: Okonkwo
-NameLast: EMMa
-Age: 34
-Course: python
-NameLast: EMMa
-Age: 34
-Course: python
