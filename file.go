@@ -355,10 +355,31 @@ import (
 // }
 
 // Always check if the file exists beforrrre deleting:
-func deleteFile(filename string) {
+// func deleteFile(filename string) {
+// 	_, err := os.Stat(filename)
+// 	if os.IsNotExist(err) {
+// 		fmt.Printf("%s nnnnot found - nothing to delete\n", filename)
+// 		return
+// 	}
+// 	err = os.Remove(filename)
+// 	if err != nil {
+// 		fmt.Println("Error deleting file:", err)
+// 		return
+// 	}
+// 	fmt.Printf("%s deleted sucessfully!\n", filename)
+// }
+
+// func main() {
+// 	deleteFile("hello.txt")
+// 	deleteFile("hell.txt")
+// }
+
+//Exercise
+
+func safeDelete(filename string) {
 	_, err := os.Stat(filename)
 	if os.IsNotExist(err) {
-		fmt.Printf("%s nnnnot found - nothing to delete\n", filename)
+		fmt.Printf("%s not found!\n", filename)
 		return
 	}
 	err = os.Remove(filename)
@@ -366,10 +387,19 @@ func deleteFile(filename string) {
 		fmt.Println("Error deleting file:", err)
 		return
 	}
-	fmt.Printf("%s deleted sucessfully!\n", filename)
+	fmt.Printf("%s deleted!", filename)
 }
 
 func main() {
-	deleteFile("hello.txt")
-	deleteFile("hell.txt")
+	file, err := os.Create("temp.txt")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	defer file.Close()
+
+	file.WriteString("This is a lesson of file handling")
+
+	safeDelete("temp.txt")
+	safeDelete("temp.txt")
 }
