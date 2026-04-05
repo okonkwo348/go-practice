@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"strings"
+	"strconv"
 )
 
 // Your exercise:
@@ -106,14 +106,47 @@ import (
 // Split the sentence into words and print the total word count
 // Check if the sentence contains "go" and print the result
 
-func main() {
-	sentence := "  i love java. java is good but go is better than java.  "
+//Use stings Package
+// func main() {
+// 	sentence := "  i love java. java is good but go is better than java.  "
 
-	fmt.Println(strings.TrimSpace(sentence))
-	fmt.Println(strings.ToUpper(sentence))
-	fmt.Println(strings.Count(sentence, "java"))
-	fmt.Println(strings.ReplaceAll(sentence, "java", "Go"))
-	split := strings.Fields(sentence)
-	fmt.Println(len(split))
-	fmt.Println(strings.Contains(sentence, "go"))
+// 	fmt.Println(strings.TrimSpace(sentence))
+// 	fmt.Println(strings.ToUpper(sentence))
+// 	fmt.Println(strings.Count(sentence, "java"))
+// 	fmt.Println(strings.ReplaceAll(sentence, "java", "Go"))
+// 	split := strings.Fields(sentence)
+// 	fmt.Println(len(split))
+// 	fmt.Println(strings.Contains(sentence, "go"))
+// }
+
+// strconv Package
+func main() {
+	ageStr := "24"
+	priceStr := "49.99"
+	isActiveStr := "true"
+
+	num, err := strconv.Atoi(ageStr)
+	if err != nil {
+		fmt.Println("error: ", err)
+		return
+	}
+
+	flo, err1 := strconv.ParseFloat(priceStr, 64)
+	if err1 != nil {
+		fmt.Println("Error: ", err1)
+		return
+	}
+
+	bol, err2 := strconv.ParseBool(isActiveStr)
+	if err2 != nil {
+		fmt.Println("Error: ", err2)
+		return
+	}
+
+	fmt.Println(num + 6)
+	fmt.Println(flo * 3)
+	fmt.Println(bol)
+
+	fmt.Printf("%s | %s | %s", strconv.Itoa(num), strconv.FormatFloat(flo, 'f', 2, 64), strconv.FormatBool(bol))
+
 }
