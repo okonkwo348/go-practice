@@ -8,38 +8,38 @@ import (
 	"strings"
 )
 
-func bin(s string) string {
+func bin(s string) (string, error) {
 	a, err := strconv.ParseInt(s, 2, 64)
 	if err != nil {
-		fmt.Println("Error: ", err)
+		return "", err
 	}
-	return strconv.FormatInt(a, 10)
+	return strconv.FormatInt(a, 10), nil
 
 }
 
-func hex(s string) string {
+func hex(s string) (string, error) {
 	a, err := strconv.ParseInt(s, 16, 64)
 	if err != nil {
-		fmt.Println("Error: ", err)
+		return "", err
 	}
-	return strconv.FormatInt(a, 10)
+	return strconv.FormatInt(a, 10), nil
 
 }
 
-func decHex(s string) string {
+func decHex(s string) (string, error) {
 	a, err := strconv.ParseInt(s, 10, 64)
 	if err != nil {
-		fmt.Println("Error: ", err)
+		return "", err
 	}
-	return strconv.FormatInt(a, 16)
+	return strings.ToUpper(strconv.FormatInt(a, 16)), nil
 }
 
-func decBin(s string) string {
+func decBin(s string) (string, error) {
 	a, err := strconv.ParseInt(s, 10, 64)
 	if err != nil {
-		fmt.Println("Error: ", err)
+		return "", err
 	}
-	return strconv.FormatInt(a, 2)
+	return strconv.FormatInt(a, 2), nil
 }
 
 func main() {
@@ -61,39 +61,57 @@ func main() {
 			break
 		}
 
+		if len(part) != 3 {
+			fmt.Println("elemets incomplete pls must enter three elemnets")
+			continue
+		}
+
 		if part[0] != "convert" {
 			fmt.Println("invalid first word")
-		}
-
-		if part[1] == "hex" && !strings.ContainsAny(part[1], "abcdefABCDEF") {
-			fmt.Println("invalid for Hex")
 			continue
 		}
 
-		if part[1] == "bin" && !strings.ContainsAny(part[1], "01") {
-			fmt.Println("invalid for bin")
-			continue
-		}
-
-		if part[1] == "dec" && !strings.ContainsAny(part[1], "abc") {
-			fmt.Println("invalid for dec")
+		if part[2] != "hex" && part[2] != "bin" && part[2] != "dec" {
+			fmt.Println("invalid last char")
 			continue
 		}
 
 		switch part[2] {
 		case "bin":
-			fmt.Printf("Decimal: %s", bin("10"))
+			nib, err := bin(part[1])
+			if err != nil {
+				fmt.Println("invalid second char for bin")
+				continue
+			}
+			fmt.Printf("Decimal: %s\n", nib)
 			continue
 		case "hex":
-			fmt.Printf("Decimal: %s", bin("1E"))
+			xeh, err1 := hex(part[1])
+			if err1 != nil {
+				fmt.Println("invalid second char for hex")
+				continue
+			}
+			fmt.Printf("Decimal: %s\n", xeh)
 			continue
 
 		case "dec":
-			fmt.Printf("Binary: %s", decBin("255"))
-			fmt.Printf("Hex: %s", decHex("255"))
+			ced, err2 := decBin(part[1])
+			if err2 != nil {
+				fmt.Println("invalid second char for dec")
+				continue
+			}
+
+			ced1, err3 := decHex(part[1])
+			if err3 != nil {
+				fmt.Println("invalid second char for dec")
+				continue
+			}
+
+			fmt.Printf("Binary: %s\n", ced)
+			fmt.Printf("Hex: %s\n", ced1)
 			continue
 		default:
-			fmt.Printf("Invalid base")
+			fmt.Printf("Invalid base\n")
 		}
 
 	}
