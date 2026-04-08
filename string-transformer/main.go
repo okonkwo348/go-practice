@@ -97,6 +97,9 @@ func main() {
 
 		part := strings.Fields(input)
 
+		result := []string{}
+		result = append(result, part...)
+
 		if len(part) < 1 {
 			fmt.Println("Empty: Type from one the commands")
 			continue
@@ -105,7 +108,14 @@ func main() {
 		if part[0] == "quit" {
 			fmt.Println(" Shutting down String Transformer. Goodbye.")
 			break
+
 		}
+
+		if part[0] == "history" {
+			fmt.Printf("History: \n%v", result[:])
+			continue
+		}
+
 		if len(part) < 2 && part[0] != "upper" && part[0] != "UPPER" && part[0] != "lower" && part[0] != "LOWER" &&
 			part[0] != "cap" && part[0] != "CAP" && part[0] != "title" && part[0] != "TITLE" && part[0] != "snake" &&
 			part[0] != "SNAKE" && part[0] != "reverse" && part[0] != "REVERSE" {
