@@ -54,7 +54,7 @@ func revWord(a string) string {
 func Reverse(a string) string {
 	s := strings.Fields(a)
 	result := []string{}
-	for i := len(s) - 1; i >= 0; i-- {
+	for i := 0; i < len(s); i++ {
 		rev := revWord(s[i])
 		result = append(result, rev)
 	}
@@ -80,8 +80,8 @@ func Snake(a string) string {
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 
-	fmt.Println("Welcome to string Transformation\n")
-	fmt.Println("Follow the format below: \n")
+	fmt.Println("Welcome to string Transformation")
+	fmt.Println("Follow the format below: ")
 	fmt.Println("<command> <text>")
 	fmt.Println("for UPPERCASE type: upper <text> --->  upper sentinel is watching ")
 	fmt.Println("For LOWERCASE type: lower <text> --->  ALERT LEVEL FIVE DETECTED")
@@ -125,27 +125,27 @@ func main() {
 		texts := strings.Join(text, " ")
 
 		switch part[0] {
-		case "upper":
+		case "upper", "UPPER":
 			fmt.Printf("%s", Upper(texts))
 			continue
 
-		case "lower":
+		case "lower", "LOWER":
 			fmt.Printf("%s", Lower(texts))
 			continue
 
-		case "cap":
+		case "cap", "CAP":
 			fmt.Printf("%s", Cap(texts))
 			continue
 
-		case "title":
+		case "title", "TITLE":
 			fmt.Printf("%s", Title(texts))
 			continue
 
-		case "snake":
+		case "snake", "SNAKE":
 			fmt.Printf("%s", Snake(texts))
 			continue
 
-		case "reverse":
+		case "reverse", "REVERSE":
 			fmt.Printf("%s", Reverse(texts))
 			continue
 
