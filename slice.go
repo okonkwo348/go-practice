@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 // func main() {
@@ -35,7 +36,14 @@ import (
 // 	fmt.Println(contain[1])
 
 // }
+func loopEach(s []string) string {
 
+	result := []string{}
+	for _, v := range s {
+		result = append(result, v)
+	}
+	return strings.Join(result, "\n")
+}
 func main() {
 	var big [][]string
 	charA := []string{" _ ", "| |", "|_|"}
@@ -44,8 +52,12 @@ func main() {
 
 	big = append(big, charA, charB, charC)
 
-	for _, v := range big {
-		fmt.Println(v)
+	result := []string{}
+	for _, v := range s {
+		result = append(result, v)
 	}
+
+
+	fmt.Println(loopEach(big[]))
 
 }
