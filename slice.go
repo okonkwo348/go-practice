@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 )
 
 // func main() {
@@ -36,14 +35,26 @@ import (
 // 	fmt.Println(contain[1])
 
 // }
-func loopEach(s []string) string {
 
-	result := []string{}
-	for _, v := range s {
-		result = append(result, v)
-	}
-	return strings.Join(result, "\n")
-}
+// for each character, print all its lines. (for each row print all columns)
+// func main() {
+// 	var big [][]string
+// 	charA := []string{" _ ", "| |", "|_|"}
+// 	charB := []string{" _ ", "| }", "|_}"}
+// 	charC := []string{" _ ", "| ", "|_ "}
+
+// 	big = append(big, charA, charB, charC)
+
+// 	for _, char := range big {
+// 		for _, col := range char {
+// 			fmt.Println(col)
+// 		}
+
+// 	}
+
+// }
+
+// for each line number, print that line for all character. (for each colums print all rows)
 func main() {
 	var big [][]string
 	charA := []string{" _ ", "| |", "|_|"}
@@ -51,13 +62,11 @@ func main() {
 	charC := []string{" _ ", "| ", "|_ "}
 
 	big = append(big, charA, charB, charC)
-
-	result := []string{}
-	for _, v := range s {
-		result = append(result, v)
+	for col := 0; col < 3; col++ {
+		for _, char := range big {
+			fmt.Print(char[col])
+		}
+		fmt.Println()
 	}
-
-
-	fmt.Println(loopEach(big[]))
 
 }
