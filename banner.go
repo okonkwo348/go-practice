@@ -2,14 +2,17 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func loadBanner(filename string) ([]string, error) {
 	file, err := os.Open(filename)
 	if err != nil {
 		fmt.Println("Error: ", err)
+		return nil, errors.New("error at openning the file")
 
 	}
 	defer file.Close()
@@ -27,16 +30,22 @@ func loadBanner(filename string) ([]string, error) {
 func getCharLines(bannerLine []string, char rune) []string {
 	startPosition := (char-32)*9 + 1
 	endPosition := startPosition + 8
+	window := bannerLine[startPosition:endPosition]
 
-	character := bannerLine[startPosition:endPosition]
+	character := make([]string, 8)
+	copy(character, window)
 
-	result := []string{}
+	return character
+
+}
+
+func renderWord(word string, bannerLines []string) string {
+	var result strings.Builder
 	for i := 0; i < 8; i++ {
-		for _, char := range character {
-			result = append(result, char)
+		for _, char := range word {
+			fmt.Print(getCharLines(bannerLines, char))
 		}
-		result = append(result, "\n")
 	}
+	result.WriteString("\n")
 	return result
-
 }
