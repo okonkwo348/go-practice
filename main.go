@@ -36,7 +36,7 @@ func main() {
 		return
 	}
 
-	bannerLine, err := loadBanner("standard.txt")
+	bannerLine, err := loadBanner("banner/standard.txt")
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
