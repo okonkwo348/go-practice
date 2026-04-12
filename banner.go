@@ -43,9 +43,22 @@ func renderWord(word string, bannerLines []string) string {
 	var result strings.Builder
 	for i := 0; i < 8; i++ {
 		for _, char := range word {
-			fmt.Print(getCharLines(bannerLines, char))
+			line := getCharLines(bannerLines, char)
+			result.WriteString(line[i])
 		}
+		result.WriteString("\n")
 	}
-	result.WriteString("\n")
-	return result
+
+	return result.String()
+}
+
+func renderAll(rows []string, bannerLines []string) {
+	for _, row := range rows {
+		if row == "" {
+			fmt.Println()
+			continue
+		}
+		fmt.Print(renderWord(row, bannerLines))
+	}
+
 }
