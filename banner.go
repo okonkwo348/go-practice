@@ -11,7 +11,6 @@ import (
 func loadBanner(filename string) ([]string, error) {
 	file, err := os.Open(filename)
 	if err != nil {
-		fmt.Println("Error: ", err)
 		return nil, errors.New("error at openning the file")
 
 	}
@@ -53,11 +52,16 @@ func renderWord(word string, bannerLines []string) string {
 }
 
 func renderAll(rows []string, bannerLines []string) {
-	for _, row := range rows {
+	for i, row := range rows {
 		if row == "" {
+			if i == len(row) {
+				continue
+			}
 			fmt.Println()
 			continue
+
 		}
+
 		fmt.Print(renderWord(row, bannerLines))
 	}
 
