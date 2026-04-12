@@ -1,32 +1,47 @@
 package main
+
 import (
+	"errors"
 	"fmt"
 	"os"
+	"strings"
 )
-func validateInput(s string)([]string, error){
-	var result []string
-	for i := 0, i < len(s); i++{
-		if !(s[i] <= 32 && s[i] >= 126 || s[i] == ' '){
-			return nil, error.new("invalid input")
+
+func validateInput(arg []string) ([]string, error) {
+
+	for _, row := range arg {
+		for _, char := range row {
+			if !(char >= 32 && char <= 126 || char == '\n') {
+				return nil, errors.New("invalid input")
+			}
+
 		}
-		result = append(result, s[i])
 	}
-	return result, nil
+	return arg, nil
 }
 
-func main(){
+func main() {
 	input := os.Args
 
-	part := string.Split(validateInput(input),"\n")
-
 	// Chang if argument is provided
-	if len(input) != 2{
-		return 
+	if len(input) != 2 {
+		return
 	}
 
-	if input[1] == ""{
-		return fmt.Println("\n")
+	splitInput := strings.Split(input[1], "\\n")
+
+	valid, err := validateInput(splitInput)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
 	}
 
+	bannerLine, err := loadBanner("standard.txt")
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	renderAll(valid, bannerLine)
 
 }
