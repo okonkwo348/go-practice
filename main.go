@@ -27,6 +27,9 @@ func main() {
 	if len(input) != 2 {
 		return
 	}
+	if input[1] == "" {
+		return
+	}
 
 	splitInput := strings.Split(input[1], "\\n")
 
