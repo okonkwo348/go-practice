@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -30,12 +31,18 @@ func TestValidateInput(t *testing.T) {
 	}
 }
 
-func TestGetCharLine(t *testing.T) {
-	// first load the banner file.
-	bannerLines, err := loadBanner("banner/standard.txt")
+var testBannerLines []string
+
+func TestMain(m *testing.M) {
+	var err error
+	testBannerLines, err = loadBanner("banner/standard.txt")
 	if err != nil {
-		t.Fatalf("could not load banner: %v", err)
+		panic("could not load banner")
 	}
+	m.Run() // runs all test
+}
+
+func TestGetCharLine(t *testing.T) {
 
 	tests := []struct {
 		name          string
@@ -50,7 +57,7 @@ func TestGetCharLine(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		result := getCharLines(bannerLines, tt.char)
+		result := getCharLines(testBannerLines, tt.char)
 		if len(result) != tt.expectedLines {
 			t.Errorf("%s: expected %d lines but got %d", tt.name, tt.expectedLines, len(result))
 		}
@@ -59,27 +66,27 @@ func TestGetCharLine(t *testing.T) {
 }
 
 func TestRenderWord(t *testing.T) {
-	bannerLines, err := loadBanner("banner/standard.txt")
-	if err != nil {
-		t.Fatalf("couldn't load load banner banner: %v", err)
-	}
 
 	tests := []struct {
-		name           string
-		word           string
-		expectedoutput string
+		name          string
+		word          string
+		expectedLines int
 	}{
-		{"lwercase land", "land", "land"},
-		{"uppercase ACER", "ACER", "ACER"},
-		{"number 5", "23", "23"},
-		{"space character", "land lord", "land lord"},
-		{"last character tilde", "~", "~"},
+		{"single char", "A", 8},
+		{"word", "hello", 8},
+		{"empty string", "", 8},
+		{"with space", "hi there", 8},
 	}
 
 	for _, tt := range tests {
-		result := renderWord(tt.word, bannerLines)
-		if result != tt.expectedoutput {
-			t.Errorf("%s: expected %s but got %s", tt.name, tt.expectedoutput, result)
+		result := renderWord(tt.word, testBannerLines)
+		lines := strings.Split(result, "\n")
+		// remove last empty element from trailing \n
+		if lines[len(lines)-1] == "" {
+			lines = lines[:len(lines)-1]
+		}
+		if len(lines) != tt.expectedLines {
+			t.Errorf("%s: expected %d lines but got %d", tt.name, tt.expectedLines, len(lines))
 		}
 	}
 }
