@@ -66,18 +66,40 @@ import (
 // 	return file
 // }
 
-func BasicAtoi(s string) int {
+// func BasicAtoi(s string) int {
+// 	result := 0
+
+// 	for _, char := range s {
+// 		digit := int(char - '0')
+// 		result = result*10 + digit
+// 	}
+// 	return result
+// }
+
+// func main() {
+// 	fmt.Println(BasicAtoi("12345"))
+// 	fmt.Println(BasicAtoi("0000000012345"))
+// 	fmt.Println(BasicAtoi("000000"))
+// }
+
+func BasicAtoi2(s string) int {
 	result := 0
 
 	for _, char := range s {
-		digit := int(char - '0')
-		result = result*10 + digit
+		if !(char >= '0' && char <= '9') {
+			return 0
+		} else {
+			digit := int(char - '0')
+
+			result = result*10 + digit
+		}
 	}
 	return result
 }
 
 func main() {
-	fmt.Println(BasicAtoi("12345"))
-	fmt.Println(BasicAtoi("0000000012345"))
-	fmt.Println(BasicAtoi("000000"))
+	fmt.Println(BasicAtoi2("12345"))
+	fmt.Println(BasicAtoi2("0000000012345"))
+	fmt.Println(BasicAtoi2("012 345"))
+	fmt.Println(BasicAtoi2("Hello World!"))
 }
