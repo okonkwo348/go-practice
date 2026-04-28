@@ -1,0 +1,66 @@
+
+
+Given a string with no newline characters and a pre-loaded banner map, return the ASCII art representation as a slice of 8 strings one per row. 
+Each row is formed by concatenating the corresponding art row from each character in the input.
+
+
+func RenderLine(text string, banner map[rune][]string) []string
+
+
+
+examples
+
+RenderLine("Hi", banner)
+
+
+8 strings, each being row[i] of 'H' + row[i] of 'i'
+
+RenderLine("", banner)
+
+
+slice of 8 empty strings ""
+
+RenderLine(" ", banner)
+
+
+8 strings each containing the space character art row
+
+The function must not add any trailing newline. The caller is responsible for printing each of the 8 strings followed by "\n".
+
+hide hint
+
+
+Loop over rows 0–7. For each row, loop over each rune in text and append banner[r][row] to a strings.Builder. Collect results in a []string of length 8.
+
+
+ascii-art/
+
+│
+
+├── go.mod
+
+│
+
+├── main.go        
+
+│
+
+├── banner.go               // LoadBanner()
+
+├── render.go               // RenderLine()
+
+│
+
+├── banner_test.go          // tests for LoadBanner()
+
+├── render_test.go          // tests for RenderLine()
+
+│
+
+├── standard.txt
+
+├── shadow.txt
+
+└── thinkertoy.txt
+
+
