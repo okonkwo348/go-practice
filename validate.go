@@ -1,16 +1,16 @@
-package main 
+package main
 
 import (
 	"fmt"
 )
 
-func ValidateInput(input []string) ([]string, error) {
-	for _, row := range input {
-		for _, ch := range row {
-			if !(ch >= 32) && !(ch <= 126) {
-				return nil, fmt.Errorf("not a ascii character")
-			}
+func ValidateInput(s string) (rune, error) {
+
+	for _, r := range s {
+		if r < 32 || r > 126 {
+			return r, fmt.Errorf("not a ascii character %c", r)
 		}
 	}
-	return input, nil 
+
+	return 0, nil
 }

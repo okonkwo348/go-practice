@@ -3,33 +3,40 @@ package main
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 func main() {
-	//mapLine, _ := LoadBanner("standard.txt")
-	if len(os.Args) < 2 || len(os.Args) > 3 {
-		fmt.Println("Error: ")
+	input := os.Args
+
+	if len(input) < 2 || len(input) > 3 {
+		fmt.Println("argument not complete")
 		return
 	}
 
-	row := strings.Split(os.Args[1], `\n`)
-	valid, err := ValidateInput(row)
-	if err != nil {
-		fmt.Println("Error: ")
+	if input[1] == "" {
 		return
 	}
 
-	banner, _ := LoadBanner("standard.txt")
-	for _, v := range valid {
-		fmt.Print(v, banner)
+	bannerFile := "standard.txt"
+
+	if len(input) == 3 {
+		validFileBanner := map[string]bool{
+			"standard.txt":   true,
+			"shadow.txt":     true,
+			"thinkertoy.txt": true,
+		}
+
+		if !validFileBanner[input[2]] {
+			fmt.Println("usage: choose from any of these;")
+			return
+		}
+
+		bannerFile = input[2]
 	}
 
-	// for i := 32; i <= 126; i++ {
-	// 	fmt.Printf("%c\n", i)
-	// 	fmt.Println()
-	// 	fmt.Printf("%s", strings.Join(mapLine[rune(i)], "\n"))
-	// }
+	Maplines, _ := LoadBanner(bannerFile)
 
-	//fmt.Print(RenderLine("k", mapLine))
+	lines := GenerateArt(input[1], Maplines)
+	fmt.Println(lines)
+
 }

@@ -7,7 +7,11 @@ func RenderLine(text string, banner map[rune][]string) []string {
 	var contain strings.Builder
 	for i := 0; i < 8; i++ {
 		for _, char := range text {
-			contain.WriteString(banner[char][i])
+			lines, ok := banner[char]
+			if !ok {
+				continue
+			}
+			contain.WriteString(lines[i])
 		}
 		result = append(result, contain.String())
 		contain.Reset()
