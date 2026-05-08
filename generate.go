@@ -1,11 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
-func GeneratArt(word string, banner map[rune][]string) string {
+func GenerateArt(word string, subStr string, banner map[rune][]string) string {
+
+	if word == "" {
+		return ""
+	}
+
 	word = strings.ReplaceAll(word, "\n", "\\n")
 	slice := Split(word)
 
@@ -16,10 +20,10 @@ func GeneratArt(word string, banner map[rune][]string) string {
 			if i == len(slice)-1 {
 				continue
 			}
-			fmt.Println()
+			result.WriteString("\n")
 			continue
 		}
-		lines := RenderLine(word, banner)
+		lines := RenderLine(word, subStr, banner)
 		for _, line := range lines {
 			result.WriteString(line + "\n")
 		}
