@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func RenderLine(s []string, substr string, bannerLine []string) {
+func RenderLine(s []string, substr string, colorCode string, bannerLine []string) {
 	for i, text := range s {
 		if text == "" {
 			if i == len(s)-1 {
@@ -16,7 +16,7 @@ func RenderLine(s []string, substr string, bannerLine []string) {
 			for charPos, char := range text {
 				if isColored(charPos, positions, len(substr)) {
 					lines := getCharLine(bannerLine, char)
-					fmt.Print("\033[32m" + lines[i] + "\033[0m")
+					fmt.Print(colorCode + lines[i] + "\033[0m")
 				} else {
 					lines := getCharLine(bannerLine, char)
 					fmt.Print(lines[i])
