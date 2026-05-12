@@ -13,6 +13,12 @@ func main() {
 	}
 
 	flag := os.Args[1]
+
+	if !strings.HasPrefix(os.Args[1], "--color=") {
+		fmt.Println("Usage: go run . --color=<color> <substring> \"string\"")
+		return
+	}
+
 	flag = strings.TrimPrefix(flag, "--color=")
 
 	colorCode := getColor(flag)
@@ -24,24 +30,25 @@ func main() {
 
 	mainString := os.Args[len(os.Args)-1]
 
-	if len(os.Args) == 3 {
-
-		subString := mainString
-		bannerLine, _ := LoadBanner("standard.txt")
-		valid, _ := ValidateInput(mainString)
-
-		RenderLine(valid, subString, colorCode, bannerLine)
-
-	}
+	subString := mainString
 
 	if len(os.Args) == 4 {
 
-		subString := os.Args[2]
+		subString = os.Args[2]
 
-		bannerLine, _ := LoadBanner("standard.txt")
-		valid, _ := ValidateInput(mainString)
-
-		RenderLine(valid, subString, colorCode, bannerLine)
 	}
+
+	bannerLine, err := LoadBanner("standard.txt")
+	if err != nil {
+		fmt.Println("error: ", err)
+		return
+	}
+	valid, err1 := ValidateInput(mainString)
+	if err1 != nil {
+		fmt.Println("error: ", err1)
+		return
+	}
+
+	RenderLine(valid, subString, colorCode, bannerLine)
 
 }
