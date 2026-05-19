@@ -1,17 +1,25 @@
 package main
 
 import (
+	"bufio"
+	"errors"
 	"os"
-	"strings"
 )
 
-func LoadBanner(filename string) ([]string, error) {
-	data, err := os.ReadFile(filename)
+func loadBanner(filename string) ([]string, error) {
+	file, err := os.Open(filename)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("error at openning the file")
+
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	var bannerLine []string
+	for scanner.Scan() {
+		bannerLine = append(bannerLine, scanner.Text())
 	}
 
-	dataSplit := strings.Split(string(data), "\n")
-
-	return dataSplit, nil
+	return bannerLine, nil
 }

@@ -7,48 +7,57 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 3 || len(os.Args) > 4 {
+	if len(os.Args) < 2 || len(os.Args) > 4 {
 		fmt.Println("incomplete argument")
 		return
 	}
 
-	flag := os.Args[1]
+	mainString := ""
 
-	if !strings.HasPrefix(os.Args[1], "--color=") {
-		fmt.Println("Usage: go run . --color=<color> <substring> \"string\"")
-		return
+	if len(os.Args) == 2 {
+		mainString = os.Args[1]
 	}
 
-	flag = strings.TrimPrefix(flag, "--color=")
+	bannerStyle := "standard" + ".txt"
 
-	colorCode := getColor(flag)
+	flag := "left"
 
-	if colorCode == "" {
-		fmt.Println("invalide color - choose: red, green, blue, yellow, cryan,magenta, white")
-		return
+	if len(os.Args) > 2 {
+		flag = strings.TrimPrefix(os.Args[1], "--align=")
+
+		validFlags := map[string]bool{
+			"left":    true,
+			"right":   true,
+			"center":  true,
+			"justify": true,
+		}
+
+		if !validFlags[flag] {
+			fmt.Println("Usage: go run . --align=<left|right|center|justify> \"string\" [banner]")
+			return
+		}
 	}
 
-	mainString := os.Args[len(os.Args)-1]
-
-	subString := mainString
+	if len(os.Args) == 3 {
+		mainString = os.Args[2]
+	}
 
 	if len(os.Args) == 4 {
+		ValidBanner := map[string]bool{
+			"standard":   true,
+			"shadow":     true,
+			"thinkertoy": true,
+		}
 
-		subString = os.Args[2]
+		if !ValidBanner[os.Args[3]] {
+			fmt.Println("not among the available banner file. Select from standard, shadow and thinkertoy")
+			return
+		}
+
+		bannerStyle = os.Args[3] + ".txt"
+
+		mainString = os.Args[2]
 
 	}
-
-	bannerLine, err := LoadBanner("standard.txt")
-	if err != nil {
-		fmt.Println("error: ", err)
-		return
-	}
-	valid, err1 := ValidateInput(mainString)
-	if err1 != nil {
-		fmt.Println("error: ", err1)
-		return
-	}
-
-	RenderLine(valid, subString, colorCode, bannerLine)
 
 }

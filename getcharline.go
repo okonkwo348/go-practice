@@ -1,9 +1,13 @@
 package main
 
-func getCharLine(bannerLine []string, char rune) []string {
-	start := int(char-32)*9 + 1
-	lines := bannerLine[start : start+8]
-	charLine := make([]string, 8)
-	copy(charLine, lines)
-	return charLine
+func getCharLines(bannerLine []string, char rune) []string {
+	startPosition := (char-32)*9 + 1
+	endPosition := startPosition + 8
+	window := bannerLine[startPosition:endPosition]
+
+	character := make([]string, 8)
+	copy(character, window)
+
+	return character
+
 }

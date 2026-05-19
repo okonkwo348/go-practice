@@ -2,17 +2,17 @@ package main
 
 import (
 	"errors"
-	"strings"
 )
 
-func ValidateInput(s string) ([]string, error) {
-	rows := strings.Split(s, "\\n")
-	for _, word := range rows {
-		for _, ch := range word {
-			if ch < 32 || ch > 126 || ch == '\n' {
-				return nil, errors.New("ch is not an ascii char")
+func validateInput(arg []string) ([]string, error) {
+
+	for _, row := range arg {
+		for _, char := range row {
+			if !(char >= 32 && char <= 126 || char == '\n') {
+				return nil, errors.New("invalid input")
 			}
+
 		}
 	}
-	return rows, nil
+	return arg, nil
 }
