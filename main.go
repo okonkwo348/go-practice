@@ -8,7 +8,7 @@ import (
 
 func main() {
 	if len(os.Args) < 2 || len(os.Args) > 4 {
-		fmt.Println("incomplete argument")
+		fmt.Println("incomplete argument. Usage: go run . [OPTION] [STRING] [BANNER]")
 		return
 	}
 
@@ -22,7 +22,10 @@ func main() {
 
 	flag := "left"
 
-	if len(os.Args) > 2 {
+	if len(os.Args) == 4 || (len(os.Args) == 3 && strings.HasPrefix(os.Args[1], "--align=")) {
+
+		mainString = os.Args[2]
+
 		flag = strings.TrimPrefix(os.Args[1], "--align=")
 
 		validFlags := map[string]bool{
@@ -38,26 +41,36 @@ func main() {
 		}
 	}
 
-	if len(os.Args) == 3 {
-		mainString = os.Args[2]
-	}
-
-	if len(os.Args) == 4 {
+	if len(os.Args) == 4 || (len(os.Args) == 3 && !strings.HasPrefix(os.Args[1], "--align=")) {
 		ValidBanner := map[string]bool{
 			"standard":   true,
 			"shadow":     true,
 			"thinkertoy": true,
 		}
 
-		if !ValidBanner[os.Args[3]] {
-			fmt.Println("not among the available banner file. Select from standard, shadow and thinkertoy")
-			return
+		if len(os.Args) == 3 {
+			if !ValidBanner[os.Args[3]] {
+				fmt.Println("not among the available banner file. Select from standard, shadow and thinkertoy")
+				return
+			}
+			bannerStyle = os.Args[2] + ".txt"
+			mainString = os.Args[1]
 		}
 
-		bannerStyle = os.Args[3] + ".txt"
+		if len(os.Args) == 4 {
+			if !ValidBanner[os.Args[2]] {
+				fmt.Println("not among the available banner file. Select from standard, shadow and thinkertoy")
+				return
+			}
+			bannerStyle = os.Args[3] + ".txt"
+		}
 
-		mainString = os.Args[2]
+	}
 
+	banner, err := loadBanner("banner/" + bannerStyle)
+
+	if err != nil {
+		fmt.Println("Error", err)
 	}
 
 }
