@@ -21,6 +21,8 @@ func Alignment(renderArt []string, terminalWidth int, flag string) string {
 			}
 			result.WriteString("\n")
 		}
+
+		return result.String()
 	case "right":
 		var result strings.Builder
 
@@ -47,6 +49,8 @@ func Alignment(renderArt []string, terminalWidth int, flag string) string {
 			}
 			result.WriteString("\n")
 		}
+
+		return result.String()
 
 	case "center":
 		var result strings.Builder
@@ -77,6 +81,8 @@ func Alignment(renderArt []string, terminalWidth int, flag string) string {
 			result.WriteString("\n")
 
 		}
+		return result.String()
+
 	case "justify":
 		var result strings.Builder
 
@@ -109,13 +115,14 @@ func Alignment(renderArt []string, terminalWidth int, flag string) string {
 						extra := 0
 						if j < leftover {
 							extra = 1
-							result.WriteString(strings.Repeat(" ", spacePerGap+extra))
 						}
+						result.WriteString(strings.Repeat(" ", spacePerGap+extra))
 					}
 				}
 			}
 			result.WriteString("\n")
 		}
+		return result.String()
 
 	default:
 		return "Usage: go run . [OPTION] [STRING] [BANNER]\n\nExample: go run . --align=right something standard\n"
