@@ -78,6 +78,48 @@ func Alignment(renderArt []string, terminalWidth int, flag string) string {
 
 		}
 	case "justify":
-		// ...
+		var result strings.Builder
+
+		var allLines [][]string
+		for _, block := range renderArt {
+			lines := strings.Split(block, "\n")
+			allLines = append(allLines, lines)
+		}
+
+		totalWidth := 0
+		for _, lines := range allLines {
+			totalWidth += len(lines[0])
+		}
+
+		totalSpace := terminalWidth - totalWidth
+		gaps := len(allLines) - 1
+		spacePerGap := totalSpace / gaps
+		leftover := totalSpace % gaps
+
+		for i := 0; i < 8; i++ {
+			if gaps == 0 {
+				for _, charLines := range allLines {
+					result.WriteString(charLines[i])
+				}
+			} else {
+
+				for j, charLines := range allLines {
+					result.WriteString(charLines[i])
+					if j < gaps {
+						extra := 0
+						if j < leftover {
+							extra = 1
+							result.WriteString(strings.Repeat(" ", spacePerGap+extra))
+						}
+					}
+				}
+			}
+			result.WriteString("\n")
+		}
+
+	default:
+		return "Usage: go run . [OPTION] [STRING] [BANNER]\n\nExample: go run . --align=right something standard\n"
+
 	}
+
 }
