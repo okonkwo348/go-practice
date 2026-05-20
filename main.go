@@ -49,7 +49,7 @@ func main() {
 		}
 
 		if len(os.Args) == 3 {
-			if !ValidBanner[os.Args[3]] {
+			if !ValidBanner[os.Args[2]] {
 				fmt.Println("not among the available banner file. Select from standard, shadow and thinkertoy")
 				return
 			}
@@ -58,7 +58,7 @@ func main() {
 		}
 
 		if len(os.Args) == 4 {
-			if !ValidBanner[os.Args[2]] {
+			if !ValidBanner[os.Args[3]] {
 				fmt.Println("not among the available banner file. Select from standard, shadow and thinkertoy")
 				return
 			}
@@ -67,10 +67,25 @@ func main() {
 
 	}
 
+	// 1. load banner
 	banner, err := loadBanner("banner/" + bannerStyle)
 
 	if err != nil {
 		fmt.Println("Error", err)
+		return
 	}
 
+	// 2. get terminal width
+	width := getTerminalWidth()
+
+	// 3 & 4. render and align each line
+	lines := strings.Split(mainString, "\\n")
+	var finalOutput strings.Builder
+
+	for _, line := range lines {
+		blocks := renderWords(line, banner)
+		finalOutput.WriteString(Alignment(blocks, width, flag))
+	}
+
+	fmt.Print(finalOutput.String())
 }

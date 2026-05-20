@@ -1,6 +1,6 @@
 package main
 
-func getCharLines(bannerLine []string, char rune) []string {
+func renderChar(bannerLine []string, char rune) []string {
 	startPosition := (char-32)*9 + 1
 	endPosition := startPosition + 8
 	window := bannerLine[startPosition:endPosition]
