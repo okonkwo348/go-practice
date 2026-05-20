@@ -1,6 +1,9 @@
 package main
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 func Alignment(renderArt []string, terminalWidth int, flag string) string {
 	switch flag {
@@ -39,7 +42,11 @@ func Alignment(renderArt []string, terminalWidth int, flag string) string {
 			totalWidth += len(lines[0])
 		}
 
+		fmt.Println("totalWidth:", totalWidth, "terminalWidth:", terminalWidth)
 		padding := terminalWidth - totalWidth
+		if padding < 0 {
+			padding = 0
+		}
 		leftPad := strings.Repeat(" ", padding)
 
 		for i := 0; i < 8; i++ {
@@ -67,6 +74,9 @@ func Alignment(renderArt []string, terminalWidth int, flag string) string {
 			totalWidth += len(lines[0])
 		}
 		padding := terminalWidth - totalWidth
+		if padding < 0 {
+			padding = 0
+		}
 
 		leftPad := strings.Repeat(" ", padding/2)
 		rightPad := strings.Repeat(" ", padding-padding/2)
@@ -98,6 +108,9 @@ func Alignment(renderArt []string, terminalWidth int, flag string) string {
 		}
 
 		totalSpace := terminalWidth - totalWidth
+		if totalSpace < 0 {
+			totalSpace = 0
+		}
 		gaps := len(allLines) - 1
 		spacePerGap := totalSpace / gaps
 		leftover := totalSpace % gaps
