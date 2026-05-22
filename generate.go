@@ -14,14 +14,19 @@ func GenerateArt(s string, banner map[rune][]string) string {
 	var result strings.Builder
 
 	for i, word := range slice {
-		if i < len(slice)-1 {
+		if word == "" {
+			if i == len(slice)-1 {
+				continue
+			}
 			result.WriteString("\n")
 			continue
 		}
 
 		renderLines := RenderLine(word, banner)
-		for _, lines := range renderLines {
-			result.WriteString(lines + "\n")
+
+		for i := 0; i < 8; i++ {
+			result.WriteString(renderLines[i])
+			result.WriteString("\n")
 		}
 	}
 	return result.String()

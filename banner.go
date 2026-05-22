@@ -24,7 +24,7 @@ func LoadBanner(filename string) (map[rune][]string, error) {
 	mapLine := make(map[rune][]string)
 	var line []string
 
-	for i := 'A'; i < '~'; i++ {
+	for i := ' '; i < '~'; i++ {
 		start := (int(i)-32)*9 + 1
 		line = container[start : start+8]
 		lines := make([]string, 8)
