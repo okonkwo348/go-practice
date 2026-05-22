@@ -80,10 +80,23 @@ func main() {
 
 	// 3 & 4. render and align each line
 	lines := strings.Split(mainString, "\\n")
+
+	validLines, err := validateInput(lines)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		return
+	}
+
 	var finalOutput strings.Builder
 
-	for _, line := range lines {
-		blocks := renderWords(line, banner)
+	for _, line := range validLines {
+		var blocks []string
+		if flag == "justify" {
+			blocks = renderWords(line, banner)
+		} else {
+			blocks = []string{RenderWord(line, banner)}
+		}
+
 		finalOutput.WriteString(Alignment(blocks, width, flag))
 	}
 
