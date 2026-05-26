@@ -1,19 +1,24 @@
 package main
 
-import "fmt"
+import (
+	"strings"
+)
 
-func renderAll(rows []string, bannerLines []string) {
+func renderAll(rows []string, bannerLines []string) string {
+	var result strings.Builder
 	for i, row := range rows {
 		if row == "" {
-			if i == len(row) {
+			if i == len(rows)-1 {
 				continue
 			}
-			fmt.Println()
+			result.WriteString("\n")
 			continue
 
 		}
+		result.WriteString(renderWord(row, bannerLines))
 
-		fmt.Print(renderWord(row, bannerLines))
 	}
+
+	return result.String()
 
 }

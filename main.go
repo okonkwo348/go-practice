@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strings"
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -31,10 +32,35 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POst" {
+	// 1. check the method
+	if r.Method != "POST" {
 		http.Error(w, "Bad Request", 400)
 		return
 	}
+
+	// 2. read the two form values
+	text := r.FormValue("text_input")
+	banner := r.FormValue("banner_style")
+
+	// 3. check for ascii validation
+	splitText := strings.Split(text, "\\n")
+	valid, err := validateInput(splitText)
+	if err != nil {
+		http.Error(w, "Bad request", 400)
+		return
+	}
+
+	// Load banner file
+	bannerLine, err := loadBanner("banner/" + strings.ToLower(banner) + ".txt")
+	if err != nil {
+		http.Error(w, "Not Found", 404)
+		return
+	}
+
+	// render ASCCI art
+	generate := renderAll(valid, bannerLine)
+
+	// send result back
 
 }
 func main() {
