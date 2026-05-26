@@ -26,9 +26,13 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
+
+}
 func main() {
 	http.HandleFunc("/", homeHandler)
-	http.HandleFunc("/ascii-art", asciiArtHander)
+	http.HandleFunc("/ascii-art", asciiArtHandler)
 
 	http.ListenAndServe(":8080", nil)
 }
