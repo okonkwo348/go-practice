@@ -10,7 +10,7 @@ import (
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	// Guarding the Gate (Request Verification)
 	if r.Method != "GET" {
-		http.Error(w, "Bad Request", 400)
+		http.Error(w, "Method Not allow", 400)
 		return
 	}
 
@@ -34,7 +34,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	// 1. check the method
 	if r.Method != "POST" {
-		http.Error(w, "Bad Request", 400)
+		http.Error(w, "Method Not Allow", 405)
 		return
 	}
 
@@ -42,18 +42,30 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	text := r.FormValue("text_input")
 	banner := r.FormValue("banner_style")
 
+	// check if text is empty
+	if text == "" {
+		http.Error(w, "Please Type at Least a Word AND select a banner", 400)
+		return
+	}
+
 	// 3. check for ascii validation
 	splitText := strings.Split(text, "\\n")
 	valid, err := validateInput(splitText)
 	if err != nil {
-		http.Error(w, "Bad request", 400)
+		http.Error(w, "Bad request: Does not accept non ascii characters", 400)
+		return
+	}
+
+	// check if banner was selected
+	if banner == "" {
+		http.Error(w, "Select a banner", 400)
 		return
 	}
 
 	// Load banner file
 	bannerLine, err := loadBanner("banner/" + strings.ToLower(banner) + ".txt")
 	if err != nil {
-		http.Error(w, "Not Found", 404)
+		http.Error(w, "Banner Not Found", 404)
 		return
 	}
 
