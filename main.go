@@ -61,6 +61,14 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	generate := renderAll(valid, bannerLine)
 
 	// send result back
+	ts, err := template.ParseFiles("templates/ascii-art.html")
+	if err != nil{
+		log.Print(err.Error())
+		http.Error(w, "Interenal Status Error", http.StatusInternalServerError)
+	}
+
+
+	err := ts.Execute(w io.Writer, generate)
 
 }
 func main() {
