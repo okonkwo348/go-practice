@@ -16,9 +16,9 @@ renderAll function
 
 ***Template***
 home.html
-result.thml
+result.html
 
-***Handler**
+***Handler***
 homeHandler function
 asciiArtHandler function
 
@@ -42,23 +42,23 @@ okonkwopaul348@gmail.com
 
 ## Usage
 
-***Execution Command**
+***Execution Command***
 To get the server started:  go run .
 
 ***Example***
 - Open this http://localhost:8080  on browser.
 - Write a text at the input text
 - Select either Standard, Shadow or Thinkertoy.
-- Click Submit butten.
+- Click Submit button.
 - Click Reset button to reset text and banner style
 
 
 
-## Implementation 
+## Implementation Details
 
 ***Logic Overview***
 - 1. Type a text in the input text and select a banner style on a web home page form at http://localhost:8080 browser.
-- 2. The text and banner style selected is received as a request by the HTTP GET method through the current path and is called at homeHandler function. The function uses template.ParseFile func to locate the home.html file.
+- 2. The homeHandler function uses template.ParseFiles func to locate the home.html file.
 - 3. The content of the file is place to in a variable w which is later executed and sent as a http response.
 - 4. The two inputs (text and banner style) from the home page is gotten through "/ascii-art" action at the form tag and sent as a request to the asciiArthandler function. 
 - 5. The asciiArthandler function check the text if it is not empty afterward split it so can be validated as an ascii character. 
