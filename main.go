@@ -61,19 +61,30 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	generate := renderAll(valid, bannerLine)
 
 	// send result back
-	ts, err := template.ParseFiles("templates/ascii-art.html")
-	if err != nil{
+	ts, err := template.ParseFiles("templates/result.html")
+	if err != nil {
 		log.Print(err.Error())
 		http.Error(w, "Interenal Status Error", http.StatusInternalServerError)
+		return
 	}
 
-
-	err := ts.Execute(w io.Writer, generate)
+	err = ts.Execute(w, generate)
+	if err != nil {
+		log.Print(err.Error())
+		http.Error(w, "Internal Status Error", http.StatusInternalServerError)
+		return
+	}
 
 }
 func main() {
 	http.HandleFunc("/", homeHandler)
 	http.HandleFunc("/ascii-art", asciiArtHandler)
 
+	log.Println("Server start on http://localhost:8080")
+
 	http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
