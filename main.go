@@ -7,6 +7,12 @@ import (
 	"strings"
 )
 
+type ArtResponse struct {
+	UserInput   string
+	AsciiArt    string
+	BannerStyle string
+}
+
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	// Guarding the Gate (Request Verification)
 	if r.Method != "GET" {
@@ -25,7 +31,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	// Delivering the Web Page (Executing)
 	err = ts.Execute(w, nil)
 	if err != nil {
-		log.Printf("Failed to parse template: %v", err)
+		log.Printf("Failed to execute template: %v", err)
 		http.Error(w, "Internal Staus Error", http.StatusInternalServerError)
 		return
 	}
@@ -72,17 +78,23 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	// render ASCCI art
 	generate := renderAll(valid, bannerLine)
 
+	responseData := ArtResponse{
+		UserInput:   text,
+		AsciiArt:    generate,
+		BannerStyle: banner,
+	}
+
 	// send result back
-	ts, err := template.ParseFiles("templates/rsult.html")
+	ts, err := template.ParseFiles("templates/result.html")
 	if err != nil {
 		log.Printf("Failed to parse template: %v", err)
-		http.Error(w, "Interenal Status Error", http.StatusInternalServerError)
+		http.Error(w, "Internal Status Error", http.StatusInternalServerError)
 		return
 	}
 
-	err = ts.Execute(w, generate)
+	err = ts.Execute(w, responseData)
 	if err != nil {
-		log.Printf("Failed to parse template: %v", err)
+		log.Printf("Failed to execute template: %v", err)
 		http.Error(w, "Internal Status Error", http.StatusInternalServerError)
 		return
 	}
@@ -94,7 +106,6 @@ func main() {
 
 	log.Println("Server start on http://localhost:8080")
 
-	http.ListenAndServe(":8080", nil)
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal(err)

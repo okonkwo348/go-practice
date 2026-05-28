@@ -1,9 +1,24 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>ASCII DISPLAY</title>
+        <title>ASCII DISPLAY - {{ .BannerStyle }}</title>
     </head>
     <body>
-        <pre>{{.}}</pre>
+        <h2> Your Results for: "{{ .UserInput }}"</h2>
+
+        <!-- Condition: Only show the layout if AsciiArt is not empty -->
+         {{ if .AsciiArt }}
+            <div style="background-color: #f4f4f4; padding: 15px; border-radius: 5px;">
+                <pre>{{ .AsciiArt }}</pre>
+            </div>
+            {{ else }}
+                <!-- Fallback condition if art failed or is missing -->
+                 <p style="color: red;">Error: No ASCII art could be generated for your input</p>
+            {{ end }}
+
+            <h3>{{ .BannerStyle }}</h3>
+                 
+            <br>
+            <a href="/">Convert Another Text</a>
     </body>
 </html>

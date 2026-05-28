@@ -21,5 +21,9 @@ func loadBanner(filename string) ([]string, error) {
 		bannerLine = append(bannerLine, scanner.Text())
 	}
 
+	if err := scanner.Err(); err != nil {
+		return nil, errors.New("error reading file content")
+	}
+
 	return bannerLine, nil
 }
