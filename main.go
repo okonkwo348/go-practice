@@ -10,14 +10,14 @@ import (
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	// Guarding the Gate (Request Verification)
 	if r.Method != "GET" {
-		http.Error(w, "Method Not allow", 400)
+		http.Error(w, "Method Not Allow", 405)
 		return
 	}
 
 	//Finding the HTML File (Parsing)
 	ts, err := template.ParseFiles("templates/home.html")
 	if err != nil {
-		log.Print(err.Error())
+		log.Printf("Failed to parse template: %v", err)
 		http.Error(w, "internal Status Error", http.StatusInternalServerError)
 		return
 	}
@@ -25,7 +25,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	// Delivering the Web Page (Executing)
 	err = ts.Execute(w, nil)
 	if err != nil {
-		log.Print(err.Error())
+		log.Printf("Failed to parse template: %v", err)
 		http.Error(w, "Internal Staus Error", http.StatusInternalServerError)
 		return
 	}
@@ -73,16 +73,16 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 	generate := renderAll(valid, bannerLine)
 
 	// send result back
-	ts, err := template.ParseFiles("templates/result.html")
+	ts, err := template.ParseFiles("templates/rsult.html")
 	if err != nil {
-		log.Print(err.Error())
+		log.Printf("Failed to parse template: %v", err)
 		http.Error(w, "Interenal Status Error", http.StatusInternalServerError)
 		return
 	}
 
 	err = ts.Execute(w, generate)
 	if err != nil {
-		log.Print(err.Error())
+		log.Printf("Failed to parse template: %v", err)
 		http.Error(w, "Internal Status Error", http.StatusInternalServerError)
 		return
 	}
