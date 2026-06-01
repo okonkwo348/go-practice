@@ -15,6 +15,12 @@ type ArtResponse struct {
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	// Guarding the Gate (Request Verification)
+
+	if r.URL.Path != "/" {
+		http.Error(w, "404 Not Found", http.StatusNotFound)
+		return
+	}
+
 	if r.Method != "GET" {
 		http.Error(w, "Method Not Allow", 405)
 		return
@@ -43,6 +49,8 @@ func asciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method Not Allow", 405)
 		return
 	}
+
+	// fmt.Println(r)
 
 	// 2. read the two form values
 	text := r.FormValue("text_input")
@@ -106,7 +114,7 @@ func main() {
 
 	log.Println("Server start on http://localhost:8080")
 
-	err := http.ListenAndServe(":8080", nil)
+	err := http.ListenAndServe(":3000", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
