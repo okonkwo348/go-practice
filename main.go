@@ -114,7 +114,7 @@ func main() {
 
 	log.Println("Server start on http://localhost:8080")
 
-	err := http.ListenAndServe(":3000", nil)
+	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
