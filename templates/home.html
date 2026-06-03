@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Ascii-Art</title>
+    </head>
+    <body>
+        <section>
+            <!-- form here-->
+            <form action="/ascii-art" method="POST">
+                <label for="text">Enter a text</label><br>
+                <textarea name="text_input" id="text"></textarea><br><br>
+                <label for="banner_text">Banner Style</label><br>
+                <input type="radio" id="standard" name="banner_style" value="Standard">
+                <label for="standard">Standard</label><br>
+                <input type="radio" id="shadow" name="banner_style" value="Shadow">
+                <label for="shadow">Shadow</label><br>
+                <input type="radio" id="thinkertoy" name="banner_style" value="Thinkertoy">
+                <label for="thinkertoy">Thinkertoy</label><br><br>
+                <input type="submit" id="submit" name="submit" value="Submit">
+                <input type="reset" id="reset" name="reset" value="Reset">
+            </form>
+        </section>
+
+
+        <section>
+            <!-- ASCII ART-->
+            {{if .}}
+                <pre>{{.}}</pre>
+            {{end}}
+        </section>
+    </body>
+</html>
