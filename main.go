@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+var ts = template.Must(template.ParseFiles("templates/home.html"))
+
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
 		log.Println("Wrong Method: needs GET method")
@@ -19,15 +21,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ts, err := template.ParseFiles("templates/home.html")
-	if err != nil {
-		log.Printf("Error: %v", err)
-		http.Error(w, "Internal Server Error", 500)
-		return
-	}
-
-	err = ts.Execute(w, nil)
-	if err != nil {
+	if err := ts.Execute(w, nil); err != nil {
 		log.Printf("Error: %v", err)
 		http.Error(w, "Internal Server Error", 500)
 		return
@@ -73,15 +67,7 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 
 	data := RenderAll(valid, bannerfile)
 
-	ts, err := template.ParseFiles("templates/home.html")
-	if err != nil {
-		log.Printf("Error: %v", err)
-		http.Error(w, "Status Internal Server Error", http.StatusInternalServerError)
-		return
-	}
-
-	err = ts.Execute(w, data)
-	if err != nil {
+	if err := ts.Execute(w, data); err != nil {
 		log.Printf("Error: %v", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
