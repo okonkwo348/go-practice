@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func ReadFile(name string) (string, error) {
@@ -28,6 +29,8 @@ func main() {
 		fmt.Printf("Error: %v", err)
 	}
 
-	fmt.Println(data)
+	contain := strings.ToUpper(data)
+
+	err = os.WriteFile(input[2], []byte(contain), 0644)
 
 }
