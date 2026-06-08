@@ -17,8 +17,9 @@ func capitalize(s string) string {
 func capitalizeN(words []string, n int) []string {
 
 	for i := 0; i < len(words); i++ {
-		if i == n {
-			words[i] = strings.ToUpper(words[1])
+		if i >= n-1 {
+			words[i] = strings.Title(words[i])
+
 		}
 	}
 
@@ -27,5 +28,5 @@ func capitalizeN(words []string, n int) []string {
 
 func main() {
 	fmt.Println(capitalize("emma"))
-	fmt.Println(capitalizeN([]string{"this", "is", "my", "world", "so", "get", "that"}, 6))
+	fmt.Println(capitalizeN([]string{"this", "is", "my", "world", "so", "get", "that"}, 4))
 }
