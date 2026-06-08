@@ -1,33 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Ascii-Art</title>
-    </head>
-    <body>
-        <section>
-            <!-- form here-->
-            <form action="/ascii-art" method="POST">
-                <label for="text">Enter a text</label><br>
-                <textarea name="text_input" id="text"></textarea><br><br>
-                <label for="banner_text">Banner Style</label><br>
-                <input type="radio" id="standard" name="banner_style" value="Standard">
-                <label for="standard">Standard</label><br>
-                <input type="radio" id="shadow" name="banner_style" value="Shadow">
-                <label for="shadow">Shadow</label><br>
-                <input type="radio" id="thinkertoy" name="banner_style" value="Thinkertoy">
-                <label for="thinkertoy">Thinkertoy</label><br><br>
-                <input type="submit" id="submit" name="submit" value="Submit">
-                <input type="reset" id="reset" name="reset" value="Reset">
-            </form>
-        </section>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <style>
+            body {
+                background-color: rgb(78, 198, 235);
+
+            }
+            form {
+                background-color: antiquewhite;
+                text-align: left;
+                width: 300px;
+                border: 10px solid green;
+                padding: 50px;
+                margin: auto;
+                
+            }
+
+            .art {
+                 background-color: rgb(227, 239, 243);
+                 margin-top: 50px;
+            }
+
+            pre {
+                color: black;
+                text-align: center;
+                width: 300px;
+                margin:auto;
+                padding:auto;
 
 
-        <section>
-            <!-- ASCII ART-->
-            {{if .}}
-                <pre>{{.}}</pre>
-            {{end}}
-        </section>
-    </body>
+            }
+
+            legend{
+                text-align: center;
+                font-size: 40px;
+                font-style:normal;
+            }
+
+            hr{
+                border-color: rgb(75, 52, 52);
+                background-color: rgb(71, 40, 40);
+                height:2px;
+                margin-top: 50px;
+            }
+
+            .refresh{
+                background-color: rgb(60, 228, 150);
+                color:white;
+                padding: 15px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                margin-left: 46%;
+
+            }
+
+            footer{
+                margin-left: 45%;
+            }
+
+        </style>
+</head>
+<body>
+    <section>
+        <!--form to fill-->
+        <form action="/ascii-art" method="POST">
+            <fieldset>
+            <legend>ASCII ART</legend>
+            <label for="text">Enter a text</label><br>
+            <textarea id="text" name="text_input"></textarea><br><br>
+            <label>Banner Style</label><br>
+            <input type="radio" id="standard" name="banner_style" value="standard">
+            <label for="standard">Standard</label><br>
+            <input type="radio" id="shadow" name="banner_style" value="shadow">
+            <label for="shadow">Shadow</label><br>
+            <input type="radio" id="thinkertoy" name="banner_style" value="thinkertoy">
+            <label for="thinkertoy">Thinkertoy</label><br><br>
+            <input type="submit" id="submit" name="submit" value="Submit">
+            <input type="reset" id="reset" name="reset" value="Reset">
+            </fieldset>
+        </form>
+    </section>
+
+    <hr>
+
+    <section class="art">
+        <!--ASCII ART-->
+        {{if .}}
+            <pre>{{.}}</pre>
+        {{end}}
+
+        <br>
+        <a class="refresh" href="/">Refresh</a>
+    </section>
+
+    <footer>
+        <address>
+            <p><a href="#">About Ascii Art</a></p>
+        </address>
+    </footer>
+</body>
 </html>

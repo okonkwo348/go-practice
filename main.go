@@ -44,8 +44,7 @@ func AsciiArtHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	wordSplit := strings.Split(text, "\\n")
-	valid, err := ValidateInput(wordSplit)
+	valid, err := ValidateInput(text)
 	if err != nil {
 		log.Print("Character Not Found in the Ascii table")
 		http.Error(w, "Character Not Found in the Ascii table", 400)

@@ -4,7 +4,6 @@ import "strings"
 
 func RenderWord(word string, bannerLines []string) string {
 	var result strings.Builder
-
 	for i := 0; i < 8; i++ {
 		for _, ch := range word {
 			start := int(ch-32)*9 + 1
@@ -17,8 +16,10 @@ func RenderWord(word string, bannerLines []string) string {
 	return result.String()
 }
 
-func RenderAll(rows []string, bannerLines []string) string {
+func RenderAll(row string, bannerLines []string) string {
 	var result strings.Builder
+	row = strings.ReplaceAll(row, "\r\n", "\n")
+	rows := strings.Split(row, "\n")
 	for i, word := range rows {
 		if word == "" {
 			if i == len(rows)-1 {
@@ -29,6 +30,7 @@ func RenderAll(rows []string, bannerLines []string) string {
 		}
 
 		result.WriteString(RenderWord(word, bannerLines))
+		result.WriteString("\n")
 	}
 
 	return result.String()
