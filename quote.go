@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 )
 
@@ -28,7 +29,12 @@ func Quote(s string) string {
 	return b.String()
 }
 
+func Quote2(s string) string {
+	last := regexp.MustCompile(`'\s*([^']*?)\s*'`)
+	return last.ReplaceAllString(s, "'$1'")
+}
+
 func main() {
-	fmt.Println(Quote(" '                   awasome      '"))
-	fmt.Println(Quote("'   hello , world   '  "))
+	fmt.Println(Quote2(" '                   awasome      '"))
+	fmt.Println(Quote2("'   hello , world   '  "))
 }

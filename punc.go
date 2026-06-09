@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 	"unicode"
 )
@@ -22,6 +23,12 @@ func Punc(s string) string {
 	return b.String()
 }
 
+func Punc1(s string) string {
+	punc := regexp.MustCompile(`\s*({a-zA-Z}) ({,"?!})`)
+	return punc.ReplaceAllString(s, "$1$2")
+}
+
 func main() {
 	fmt.Println(Punc("Hello , world !"))
+	fmt.Println(Punc1("Hello , world !"))
 }
