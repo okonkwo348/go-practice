@@ -15,7 +15,9 @@ func ReadFile(name string) (string, error) {
 	}
 
 	return string(file), nil
-}
+
+
+    // main func
 
 func main() {
 	input := os.Args
