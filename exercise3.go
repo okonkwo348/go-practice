@@ -12,11 +12,12 @@ func countHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Method == "POST" {
+	if r.Method == http.MethodPost {
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			http.Error(w, "Bad Request", http.StatusBadRequest)
 		}
+		defer r.Body.Close()
 		l := len(string(body))
 		fmt.Fprint(w, l)
 		return
