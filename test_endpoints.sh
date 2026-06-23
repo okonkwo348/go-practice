@@ -57,3 +57,4 @@ R7E=$(curl -s -o /dev/null -w "%{http_code}" "$SERVER_URL/render")
 if [ "$R7E" == "400" ]; then echo -e "${GREEN}✔ PASS: missing params returns 400${NC}"; else echo -e "${RED}✘ FAIL: expected 400 got $R7E${NC}"; fi
 
 echo -e "\n${BLUE}=== Verification Complete ===${NC}"
+
