@@ -14,6 +14,7 @@ func main() {
 	mainMux.HandleFunc("/headers", headersHandler)
 	mainMux.HandleFunc("POST /form", formHandler)
 	mainMux.HandleFunc("/status", statusHandler)
+	mainMux.HandleFunc("/render", renderHandler)
 
 	apiMux := http.NewServeMux()
 	mainMux.Handle("/api/", http.StripPrefix("/api", apiMux))
@@ -22,7 +23,7 @@ func main() {
 
 	fmt.Println("Serving on http://localhost:8080")
 
-	err := http.ListenAndServe(":8080", apiMux)
+	err := http.ListenAndServe(":8080", mainMux)
 	if err != nil {
 		log.Fatal(err)
 	}
