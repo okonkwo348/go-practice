@@ -20,6 +20,12 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	you can catch it immediately and return a 400 Bad Request before your application
 	processes anything else.*/
 
+	content := r.Header.Get("Content-Type")
+	if content != "application/x-www-form-urlencoded" {
+		http.Error(w, "Unsupported Media Type", 415)
+		return
+	}
+
 	err := r.ParseForm()
 	if err != nil {
 		http.Error(w, "Bad request", 400)
@@ -42,4 +48,7 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	if len(username) != 0 && len(language) != 0 {
 		fmt.Fprintf(w, "Hello %v, your are coding in %v!", username, language)
 	}
+
+	fmt.Fprint(w, username)
+
 }

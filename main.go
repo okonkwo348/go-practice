@@ -7,16 +7,22 @@ import (
 )
 
 func main() {
-	mux := http.NewServeMux()
+	mainMux := http.NewServeMux()
 
-	mux.HandleFunc("/method-inspector", inspectorHandler)
-	mux.HandleFunc("POST /echo", echoHandler)
-	mux.HandleFunc("/headers", headersHandler)
-	mux.HandleFunc("POST /form", formHandler)
-	mux.HandleFunc("/status", statusHandler)
+	mainMux.HandleFunc("/method-inspector", inspectorHandler)
+	mainMux.HandleFunc("POST /echo", echoHandler)
+	mainMux.HandleFunc("/headers", headersHandler)
+	mainMux.HandleFunc("POST /form", formHandler)
+	mainMux.HandleFunc("/status", statusHandler)
+
+	apiMux := http.NewServeMux()
+	mainMux.Handle("/api/", http.StripPrefix("/api", apiMux))
+	apiMux.HandleFunc("/v1/ping", pingHandler)
+	apiMux.HandleFunc("/v1/greet", greetHandler)
+
 	fmt.Println("Serving on http://localhost:8080")
 
-	err := http.ListenAndServe(":8080", mux)
+	err := http.ListenAndServe(":8080", apiMux)
 	if err != nil {
 		log.Fatal(err)
 	}
