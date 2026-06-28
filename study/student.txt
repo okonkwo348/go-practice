@@ -1,0 +1,9 @@
+=== Student Record ===
+Name: Okonkwo
+Course: Physics
+maths: 50.00
+english: 90.00
+science: 30.00
+maths: 50.00
+english: 90.00
+science: 30.00

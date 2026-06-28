@@ -1,0 +1,3 @@
+My name is Emmanuel, i came from lagos.
+I feel mlike go is the best language.
+i am learning slice at the moment.
