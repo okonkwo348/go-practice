@@ -1,0 +1,15 @@
+1. go run main.go calculate.go
+
+2. input any of the blow
+ <sum> <num1> <num2>
+ <sub> <num1> <num2>
+ <mul> <num1> <num2>
+ <div> <num1> <num2>
+
+ the arguments should be three and an integer
+
+ HELP - to get all the available operations 
+
+ quit - to exit the loop terminal
+
+ 
